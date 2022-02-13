@@ -7,7 +7,7 @@ stages:
   jobs:
   - job: Build
     pool:
-      name: Hosted Ubuntu 1804
+      vmImage: 'Ubuntu-18.04'
     steps:
     # Needed for Terraform VM deployment
     # - task: InstallSSHKey@0
