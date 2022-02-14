@@ -1,7 +1,7 @@
 name: Azure Pipelines
 variables:
   python.version: '3.7.6'
-  appname: 'kumhoe-appservice'
+  appname: 'kumhoe-AppService'
 stages:
 - stage: Build
   jobs:
