@@ -1,5 +1,6 @@
 name: Azure Pipelines
 variables:
+  - group: terraform-var-group
   python.version: '3.7.6'
   appname: 'kumhoe-AppService'
 stages:
