@@ -53,10 +53,10 @@ stages:
           provider: 'azurerm'
           command: 'init'
           backendServiceArm: 'udacity-project-connection'
-          backendAzureRmResourceGroupName: '$(backendAzureRmResourceGroupName)'
-          backendAzureRmStorageAccountName: '$(backendAzureRmStorageAccountName)'
-          backendAzureRmContainerName: '$(backendAzureRmContainerName)'
-          backendAzureRmKey: '$(backendAzureRmKey)'
+          backendAzureRmResourceGroupName: 'tfstate'
+          backendAzureRmStorageAccountName: 'tfstate16825'
+          backendAzureRmContainerName: 'tfstate'
+          backendAzureRmKey: 'terraform.state'
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
       
       - task: TerraformTaskV1@0
