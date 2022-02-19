@@ -1,4 +1,4 @@
-# Udacity Nanodegress Devops Using Microsfot Azure
+# Udacity Nanodegree Devops Using Microsfot Azure
 This project showcase the CI/CD full pipeline using Microsoft Azure. The pipeline ensure quality releases by implementing CI/CD pipeline in Azure Devops service.
 
 ## Description
