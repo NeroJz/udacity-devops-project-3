@@ -48,7 +48,7 @@ stages:
         inputs:
           terraformVersion: '1.1.4'
 
-      - task: TerraformTaskV1@0
+      - task: TerraformTaskV2@2
         inputs:
           provider: 'azurerm'
           command: 'init'
@@ -59,14 +59,14 @@ stages:
           backendAzureRmKey: 'terraform.state'
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
       
-      - task: TerraformTaskV1@0
+      - task: TerraformTaskV2@2
         displayName: Terraform Plan
         inputs:
           provider: 'azurerm'
           command: 'plan'
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
 
-      - task: TerraformTaskV1@0
+      - task: TerraformTaskV2@2
         displayName: Terraform Apply
         inputs:
           provider: 'azurerm'
