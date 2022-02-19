@@ -2,7 +2,7 @@
 This project showcase the CI/CD full pipeline using Microsoft Azure. The pipeline ensure quality releases by implementing CI/CD pipeline in Azure Devops service.
 
 ## Description
-This project implements CI/CD pipeline using Microsoft Azure. The pipeline starts with deploying the Azure resources using IaC. It then follow by deploying the FakeTestApi app. Then, the pipeline will run the Regression Tests and UI Tests using Postman and Selenium respectively. 
+This project implements CI/CD pipeline using Microsoft Azure. The pipeline starts with deploying the Azure resources using IaC. It then follow by deploying the FakeTestApi app. Then, the pipeline will run the Regression Tests and UI Tests using Postman and Selenium respectively. The pipeline also make use the JMeter to conduct performance testing on the FakeTestApi.
 
 ## Getting Started
 1. Create an Azure Free Account.
