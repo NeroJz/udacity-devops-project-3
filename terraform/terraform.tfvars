@@ -17,4 +17,4 @@ address_prefix_test = "10.5.1.0/24"
 # VM size
 admin_user = "azureAdmin"
 size = "Standard_B2s"
-rsa_key_path = "./id_rsa"
+rsa_key_path = "~/.ssh/id_rsa.pub"
