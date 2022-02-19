@@ -52,7 +52,7 @@ stages:
         inputs:
           provider: 'azurerm'
           command: 'init'
-          backendServiceArm: '$(backendService)'
+          backendServiceArm: 'udacity-project-connection'
           backendAzureRmResourceGroupName: 'tfstate'
           backendAzureRmStorageAccountName: 'tfstate16825'
           backendAzureRmContainerName: 'tfstate'
@@ -63,13 +63,13 @@ stages:
         inputs:
           provider: 'azurerm'
           command: 'plan'
-          environmentServiceNameAzureRM: '$(backendService)'
+          environmentServiceNameAzureRM: 'udacity-project-connection'
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
       
       - task: TerraformTaskV2@2
         inputs:
           provider: 'azurerm'
           command: 'apply'
-          environmentServiceNameAzureRM: '$(backendService)'
+          environmentServiceNameAzureRM: 'udacity-project-connection'
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
 
