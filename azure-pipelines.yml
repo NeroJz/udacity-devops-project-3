@@ -52,7 +52,7 @@ stages:
         inputs:
           provider: 'azurerm'
           command: 'init'
-          backendServiceArm: 'Udacity Project'
+          backendServiceArm: 'udacity-project-connection'
           backendAzureRmResourceGroupName: '$(backendAzureRmResourceGroupName)'
           backendAzureRmStorageAccountName: '$(backendAzureRmStorageAccountName)'
           backendAzureRmContainerName: '$(backendAzureRmContainerName)'
