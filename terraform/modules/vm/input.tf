@@ -1,0 +1,9 @@
+variable "resource_group" {}
+variable "location" {}
+variable "size" {}
+variable "admin_username" {}
+variable "subnet_id" {}
+variable "public_ip_address_id" {}
+variable "application_type" {}
+variable "name" {}
+variable "rsa_public_key_path" {}

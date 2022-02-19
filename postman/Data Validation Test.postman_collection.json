@@ -1,0 +1,930 @@
+{
+	"info": {
+		"_postman_id": "b8bcaddf-be0f-4bc6-bb5f-53ff4bfcb9bd",
+		"name": "Data Validation Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"var total_users = 10;",
+							"",
+							"pm.test(`Get Users endpoint return expect ID [1 - ${total_users}]`, function () {",
+							"    for(var i=0; i < total_users; i++) {",
+							"        pm.expect(jsonData[i].ID).to.eql(i+1);",
+							"    }",
+							"});",
+							"",
+							"pm.test(`Get Users endpoint returns ${total_users} users`, function () {",
+							"    pm.expect(jsonData.length).equal(total_users);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Books",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"var totalBooks = 200;",
+							"",
+							"pm.test(`Verify Book ID 1 - ${totalBooks}`, function () {",
+							"    for(var i=0; i < totalBooks; i++) {",
+							"        pm.expect(jsonData[i].ID).to.equal(i+1);",
+							"    }",
+							"});",
+							"",
+							"pm.test(`Total Books found is equal ${totalBooks}`, () => {",
+							"    pm.expect(jsonData.length).equal(totalBooks);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/books",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get CoverPhotos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"var total_records = 200;",
+							"",
+							"pm.test(`Get CoverPhoto endpoint return expect ID [1 - ${total_records}]`, function () {",
+							"    for(var i=0; i < total_records; i++) {",
+							"        pm.expect(jsonData[i].ID).to.eql(i+1);",
+							"    }",
+							"});",
+							"",
+							"pm.test(`Get CoverPhoto endpoint returns ${total_records} records`, function () {",
+							"    pm.expect(jsonData.length).equal(total_records);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/CoverPhotos",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"CoverPhotos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Authors",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"var total_records = jsonData.length;",
+							"",
+							"pm.test(`Get Authors endpoint return expect ID [1 - ${total_records}]`, function () {",
+							"    for(var i=0; i < total_records; i++) {",
+							"        pm.expect(jsonData[i].ID).to.eql(i+1);",
+							"    }",
+							"});",
+							"",
+							"pm.test(`Get Authors endpoint returns ${total_records} records`, function () {",
+							"    pm.expect(jsonData.length).equal(total_records);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/authors",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"authors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Activities",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"var total_records = jsonData.length;",
+							"",
+							"pm.test(`Get Activities endpoint return expect ID [1 - ${total_records}]`, function () {",
+							"    for(var i=0; i < total_records; i++) {",
+							"        pm.expect(jsonData[i].ID).to.eql(i+1);",
+							"    }",
+							"});",
+							"",
+							"pm.test(`Get Activities endpoint returns ${total_records} records`, function () {",
+							"    pm.expect(jsonData.length).equal(total_records);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/activities",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"activities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Activity",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Create Activity return expected response\", function () {",
+							"    pm.expect(jsonData).to.eql(null);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/activities",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"activities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Create Book should return NULL with empty body\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql(null);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/Books",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"Books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Author",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Create Authors endpoint returns expected response\", function () {",
+							"    pm.expect(jsonData).to.eql(null);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/authors",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"authors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create CoverPhotos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Create CoverPhotos endpoint returns expected response\", function () {",
+							"    pm.expect(jsonData).to.eql(null);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/CoverPhotos",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"CoverPhotos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Create Users endpoint returns expected response\", function () {",
+							"    pm.expect(jsonData).to.eql(null);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User By Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Delete User endpoints return expected body\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Delete Book endpoint should return EMPTY body\", function () {",
+							"    pm.response.to.have.body(\"\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/books/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"books",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete CoverPhoto By Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Delete CoverPhoto endpoints return expected body\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/coverphotos/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"coverphotos",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Author By Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Delete Author endpoints return expected body\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/authors/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"authors",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Activity By Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Delete Activity endpoints return expected body\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/activities/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"activities",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Activity",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Update Activity endpoint returns expected result\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql(null);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/activities/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"activities",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Update Book endpoint returns expected response\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql(null);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/books/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"books",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Author",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Update Author endpoint returns expected result\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql(null);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/authors/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"authors",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update CoverPhoto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Update CoverPhoto endpoint returns expected result\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql(null);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/coverphotos/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"coverphotos",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Update User endpoint returns expected result\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.eql(null);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User By Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"var user_id = pm.variables.get(\"user_id\");",
+							"var user_name = pm.variables.get(\"user_name\");",
+							"",
+							"pm.test(`Get User By ID should return expected result`, function () {",
+							"    pm.expect(String(jsonData.ID)).to.eql(user_id);",
+							"    pm.expect(jsonData.UserName).to.eql(user_name);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users/{{user_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"{{user_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Book By ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"var book_id = pm.variables.get(\"book_id\");",
+							"var book_title = pm.variables.get(\"book_title\");",
+							"",
+							"pm.test(`Get Book By ID should return expected result`, function () {",
+							"    pm.expect(String(jsonData.ID)).to.eql(book_id);",
+							"    pm.expect(jsonData.Title).to.eql(book_title);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/books/{{book_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"books",
+						"{{book_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get CoverPhoto By Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"var cover_photo_id = pm.variables.get(\"cover_photo_id\");",
+							"var cover_photo_book_id = pm.variables.get(\"cover_photo_book_id\");",
+							"",
+							"pm.test(`Get CoverPhoto By ID should return expected result`, function () {",
+							"    pm.expect(String(jsonData.ID)).to.eql(cover_photo_id);",
+							"    pm.expect(String(jsonData.IDBook)).to.eql(cover_photo_book_id);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/coverphotos/{{cover_photo_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"coverphotos",
+						"{{cover_photo_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Book Cover By IDBook",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get Book Cover Endpoint return expected response\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/books/covers/{{cover_photo_book_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"books",
+						"covers",
+						"{{cover_photo_book_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Author By Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"var author_id = pm.variables.get(\"author_id\");",
+							"var fname = pm.variables.get(\"author_fname\");",
+							"var lname = pm.variables.get(\"author_lname\");",
+							"",
+							"",
+							"pm.test(`Get Author By ID should return expected result`, function () {",
+							"    pm.expect(String(jsonData.ID)).to.eql(author_id);",
+							"    pm.expect(String(jsonData.FirstName)).to.eql(fname);",
+							"    pm.expect(String(jsonData.LastName)).to.eql(lname);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/authors/{{author_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"authors",
+						"{{author_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Author Book By Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get Author Books By Id should return expected response\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/authors/books/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"authors",
+						"books",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Activity By Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"var activity_id = pm.variables.get(\"activity_id\");",
+							"var activity_name = pm.variables.get(\"activity_name\");",
+							"var status = pm.variables.get(\"activity_status\");",
+							"",
+							"",
+							"pm.test(`Get Activity By ID should return expected result`, function () {",
+							"    pm.expect(String(jsonData.ID)).to.eql(activity_id);",
+							"    pm.expect(String(jsonData.Title)).to.eql(activity_name);",
+							"    pm.expect(String(jsonData.Completed)).to.eql(status);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/activities/{{activity_id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"activities",
+						"{{activity_id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
