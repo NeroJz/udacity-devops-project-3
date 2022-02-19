@@ -27,7 +27,8 @@ stages:
         name: InstallSSHKey
         displayName: Install SSH Key
         inputs:
-          knownHostsEntry: 'ssh-rsa AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBK/+26f+uk2kv+pq0zl0RiIKe/b9WXn5HBVJLFBPuBC7o4RrSJaR2fFea4WzLKhTepLri0/L10/jtGFv9JWUIPA='
+          knownHostsEntry: 'default'
+          sshPublicKey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC19L6GYKYW6buRhtCLBGsBCd73hziaEvsoKZJqD5D0KAmrMyKHMIBSI9V21NuVr/Wyf6VyAWruu7yc0pu996Izd29GHU4viakRSTDByhhi5IX1x2FfS/NKXWtG+ALUNMkfJ+98YqpqV9apAvEoEpDMtNC3UEnDzaI0CF3r4dzlGLeVbF6ya4XRD1HtANtoA5R+eYyWHSz089crrzXvXg7BQywVioiGTw1OiHxv3GWKyKiIdvJYTWWLGro1npqm5GfGUxPNpJPSgAAHk4h1hDDAv/D3aXgMCBuuU6tOE1KiX6+04pcE35j5HTIH9YIN+5Dtf8lfy/okJEM/E1tBTpVchs9p0YGetElsmr6Ghs7IKzF99L714/gNgjIllZ3yeUFemsmRwYKgPmjEhQfawglbORQafXqUsDBIOTHknRPDE6yv9aQbf7RHDXQ6XGCSGjQ/vBE6rw//fk2t7gYcDsgv4wppasBMTa4BygUWK+tye7B1k8cmkwPJgW8aHtK1PQbsDgYl+GNjWYtRXr79PfLD5Gtda5dJCwocD5FReSok437AbHQblgkz7b8YXyhLS3318dSmoGcKHUq4kZf7tCGu/YUH9sH68mcyJSu4XKm1nmA9SJ9nb8jn2nA8uRidjLVHYSxT6LRhcNUgSCbg8i0JDBfIT8IUjOUiazpFQVVALw== MacBookPro@MacBook-Pro.local'
           sshKeySecureFile: 'id_rsa'
 
       - task: Bash@3
