@@ -3,66 +3,68 @@ variables:
   python.version: '3.7.6'
   appname: 'kumhoe-AppService'
 stages:
-- stage: Build
-  jobs:
-  - job: Build
-    pool:
-      vmImage: 'Ubuntu-18.04'
-    steps:
-    # Needed for Terraform VM deployment
-    # - task: InstallSSHKey@0
-    #   inputs:
-    #     knownHostsEntry: 'KNOWN_HOSTS_STRING'
-    #     sshPublicKey: 'PUBLIC_KEY'
-    #     sshKeySecureFile: 'id_rsa'
-    - task: ArchiveFiles@2
-      displayName: 'Archive FakeRestAPI'
-      inputs:
-        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/fakerestapi'
-        includeRootFolder: false
-        archiveType: 'zip'
-        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
-    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
-      displayName: 'Upload Package'
-      artifact: drop-fakerestapi
-- stage:
-  jobs:
-  - deployment: FakeRestAPI
-    pool:
-      vmImage: 'Ubuntu-18.04'
-    environment: 'TEST'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: AzureWebApp@1
-            displayName: 'Deploy Azure Web App'
-            inputs:
-              azureSubscription: 'udacity-project3-connection'
-              appName: $(appname)
-              appType: webApp
-              package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
-  # - deployment: VMDeploy
-  #   displayName: NAME
-  #   environment:
-  #     name:  ENVIRONMENT NAME
-  #     resourceType: VirtualMachine
-  #     tags: TAG NAME
-  #   strategy:
-  #     runOnce:
-  #       deploy:
-  #         steps:
-  #         - task: Bash@3
-  #           inputs:
-  #             targetType: 'inline'
-  #             script: |
-  #               #! /bin/bash
-                
-  #               sudo apt-get upgrade -y
-  #               sudo apt-get install python3-pip -y
-  #               sudo apt-get install unzip -y
-  #               sudo apt-get install -y chromium-browser
-  #               pip3 install selenium
-  #               export PATH=$PATH:some/path
+  - stage: ProvisionIaC
+    displayName: Provisioning Azure Resources
+    jobs:
+    - job: ProvisionAppService
+      displayName: Provisioning App Service
+      pool:
+        vmImage: 'Ubuntu-18.04'
+      steps:
+      - task: DownloadSecureFile@1
+        name: terraformtfvars
+        displayName: Download terraform.tfvars
+        inputs:
+          secureFile: 'terraform.tfvars'
 
+      - task: DownloadSecureFile@1
+        name: maintf
+        displayName: Download main.tf
+        inputs:
+          secureFile: 'main.tf'
+
+      - task: InstallSSHKey@0
+        name: InstallSSHKey
+        displayName: Install SSH Key
+        inputs:
+          knownHostsEntry: 'default'
+          sshKeySecureFile: 'id_rsa'
+
+      - task: Bash@3
+        displayName: Copy terraform.tfvars
+        inputs:
+          targetType: 'inline'
+          script: cp $(Agent.TempDirectory)/terraform.tfvars $(System.DefaultWorkingDirectory)/terraform
+
+      - task: Bash@3
+        displayName: Copy main.tf
+        inputs:
+          targetType: 'inline'
+          script: cp $(Agent.TempDirectory)/main.tf $(System.DefaultWorkingDirectory)/terraform
+      
+      - task: TerraformInstaller@0
+        displayName: Install Terraform
+        inputs:
+          terraformVersion: '1.1.4'
+
+      - task: TerraformTaskV1@0
+        displayName: Terraform Init
+        inputs:
+          provider: 'azurerm'
+          command: 'init'
+          workingDirectory: '${System.DefaultWorkingDirectory}/terraform'
+      
+      - task: TerraformTaskV1@0
+        displayName: Terraform Plan
+        inputs:
+          provider: 'azurerm'
+          command: 'plan'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+
+      - task: TerraformTaskV1@0
+        displayName: Terraform Apply
+        inputs:
+          provider: 'azurerm'
+          command: 'apply'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
 
