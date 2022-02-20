@@ -147,25 +147,12 @@ stages:
                 script: |
                   #! /bin/bash
                   sudo apt autoremove
-                  cat /etc/*-release
-                  sudo apt-get install software-properties-common -y
-                  sudo apt-add-repository universe -y
-                  sudo apt-get update -y
-
-                  sudo apt-get install python3.6
-
-                  sudo apt-get install python3-pip -y
-                  sudo apt-get install unzip -y
-                  sudo apt-get install -y chromium-browser
-                  sudo apt-get install -y chromium-chromedriver
-                  # python3 -m pip install --upgrade pip
-                  pip3 install --upgrade pip
+                  sudo apt update
+                  sudo apt upgrade
+                  sudo apt install python3-pip -y
+                  sudo apt install -y chromium-browser
+                  sudo apt install unzip -y
                   pip3 install selenium
-                  python3 -V
-                  pip3 -V
-                  /usr/bin/chromium-browser --version
-                  /usr/bin/chromedriver --version
-                  python3 -c "import selenium; print('Selenium Version:', selenium.__version__)"
                 
   # - stage: UITest
   #   displayName: UI Testing
