@@ -5,7 +5,7 @@ variables:
   appname: 'kumhoe-AppService'
   subscription: 'udacity-project-connection'
 stages:
-  - stage: ProvisionIaC
+  # - stage: ProvisionIaC
     displayName: Provisioning Azure Resources
     jobs:
     - job: ProvisionAppService
@@ -75,7 +75,7 @@ stages:
           environmentServiceNameAzureRM: $(subscription)
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
 
-  - stage: Build
+  # - stage: Build
     displayName: Build FakeRestAPI
     jobs:
     - job: BuildFakerRest
@@ -114,7 +114,7 @@ stages:
   - stage: Deployment
     displayName: Deploy Artifact(s)
     jobs:
-    - deployment: FakeRestAPI
+    # - deployment: FakeRestAPI
       displayName: Deploying FakeRestAPI from Artifact
       pool:
         vmImage: 'Ubuntu-18.04'
@@ -150,11 +150,15 @@ stages:
                   sudo apt-get install software-properties-common -y
                   sudo apt-add-repository universe -y
                   sudo apt-get update -y
+
+                  sudo apt-get install python3.6
+
                   sudo apt-get install python3-pip -y
                   sudo apt-get install unzip -y
                   sudo apt-get install -y chromium-browser
                   sudo apt-get install -y chromium-chromedriver
-                  python3 -m pip install --upgrade pip
+                  # python3 -m pip install --upgrade pip
+                  pip3 install --upgrade pip
                   pip3 install selenium
                   python3 -V
                   pip3 -V
@@ -162,7 +166,7 @@ stages:
                   /usr/bin/chromedriver --version
                   python3 -c "import selenium; print('Selenium Version:', selenium.__version__)"
                 
-  - stage: UITest
+  # - stage: UITest
     displayName: UI Testing
     jobs:
     - deployment: VMUITest
