@@ -78,7 +78,7 @@ stages:
   - stage: Build
     displayName: Build FakeRestAPI
     jobs:
-    - job: Build
+    - job: BuildFakeRest
       displayName: Build Archive
       pool:
         vmImage: 'Ubuntu-18.04'
@@ -94,7 +94,7 @@ stages:
         displayName: 'Upload FakerRestAPI Artifact'
         artifact: drop-fakerestapi
     
-    - job: Build
+    - job: BuildSelenium
       displayName: Build Archive
       pool:
         vmImage: 'Ubuntu-18.04'
