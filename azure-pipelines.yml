@@ -227,3 +227,26 @@ stages:
           testResultsFormat: 'JUnit'
           testResultsFiles: '$(System.DefaultWorkingDirectory)/Results/*.xml'
 
+  - stage: PerformanceTest
+    displayName: JMeter Test
+    jobs:
+      - job: JMeterTest
+        displayName: Performance Test with JMeter
+        pool:
+          vmImage: 'Ubuntu-18.04'
+        steps:
+        - task: JMeterInstaller@0
+          inputs:
+            jmeterVersion: '5.4.2'
+
+        - task: Bash@3
+          displayName: Endurance Test
+          inputs:
+            targetType: 'inline'
+            script: 'jmeter -n -t jmeter/Endurance_Test.jmx -Jresdir=jmeter/endurance-test-result.csv -l jmeter/report/enduranceresults.jtl -e -o jmeter/endurancereport'
+
+        - task: Bash@3
+          displayName: Stress Test
+          inputs:
+            targetType: 'inline'
+            script: 'jmeter -n -t jmeter/Stress_Test.jmx -Jresdir=jmeter/stress-test-result.csv -l jmeter/report/stressresults.jtl -e -o jmeter/stressreport'
