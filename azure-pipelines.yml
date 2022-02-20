@@ -151,6 +151,8 @@ stages:
                   sudo apt-add-repository universe -y
                   sudo apt-get update -y
 
+                  sudo apt autoremove -y
+
                   sudo apt-get install python3.6
 
                   sudo apt-get install python3-pip -y
