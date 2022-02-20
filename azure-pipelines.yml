@@ -147,14 +147,13 @@ stages:
                 script: |
                   #! /bin/bash
                   sudo apt-get autoremove
-                  sudo apt-get install software-properties-common -y
-                  sudo apt-add-repository universe -y
+                  sudo apt-add-repository ppa:deadsnakes/ppa   
                   sudo apt-get update
                   sudo apt-get upgrade -y
                   sudo apt-get install python3.8 -y
                   sudo apt-get install python3-pip unzip expect -y
                   sudo apt-get install -y chromium-browser
-                  python3 -m pip install --upgrade pip
+                  python3.8 -m pip install --upgrade pip
                   sudo pip3 install selenium
                   sudo rm -rf chromedriver*
                   wget https://chromedriver.storage.googleapis.com/90.0.4430.24/chromedriver_linux64.zip
@@ -164,9 +163,9 @@ stages:
 
                   /usr/bin/chromium-browser -version
                   /usr/bin/chromedriver -version
-                  python3 -V
+                  python3.8 -V
 
-                  python3 -c "import selenium; print('Selenium Version:', selenium.__version__)"
+                  python3.8 -c "import selenium; print('Selenium Version:', selenium.__version__)"
                 
   - stage: UITest
     displayName: UI Testing
