@@ -159,6 +159,8 @@ stages:
 
                   /usr/bin/chromium-browser -version
                   /usr/bin/chromedriver -version
+
+                  python3 -c "import selenium; print('Selenium Version:', selenium.__version__)"
                 
   - stage: UITest
     displayName: UI Testing
