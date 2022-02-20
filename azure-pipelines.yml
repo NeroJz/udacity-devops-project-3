@@ -154,7 +154,7 @@ stages:
                   sudo apt-get install python3.9 -y
                   sudo apt-get install python3-pip unzip expect -y
                   sudo apt-get install -y chromium-browser
-                  python3.8 -m pip install --upgrade pip
+                  python3.9 -m pip install --upgrade pip
                   sudo pip3 install selenium
                   sudo rm -rf chromedriver*
                   wget https://chromedriver.storage.googleapis.com/90.0.4430.24/chromedriver_linux64.zip
@@ -164,9 +164,9 @@ stages:
 
                   /usr/bin/chromium-browser -version
                   /usr/bin/chromedriver -version
-                  python3.8 -V
+                  python3.9 -V
 
-                  python3.8 -c "import selenium; print('Selenium Version:', selenium.__version__)"
+                  python3.9 -c "import selenium; print('Selenium Version:', selenium.__version__)"
                 
   - stage: UITest
     displayName: UI Testing
@@ -191,5 +191,5 @@ stages:
                 script: |
                   unzip -o $(Pipeline.Workspace)/selenium/selenium.zip -d .
                   sudo mkdir /var/logs
-                  python3 ui-test.py > ui-logs.log
+                  python3.9 ui-test.py > ui-logs.log
                   sudo mv ui-logs.log /var/logs
