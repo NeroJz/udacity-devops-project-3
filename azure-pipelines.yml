@@ -146,6 +146,8 @@ stages:
                 targetType: 'inline'
                 script: |
                   #! /bin/bash
+                  sudo apt-get install software-properties-common -y
+                  sudo apt-add-repository universe -y
                   sudo apt-get autoremove
                   sudo apt-get update
                   sudo apt-get upgrade -y
