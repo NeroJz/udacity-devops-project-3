@@ -101,7 +101,7 @@ stages:
       displayName: Deploying FakeRestAPI from Artifact
       pool:
         vmImage: 'Ubtuntu-18.04'
-      environment: 'FAKEREST-APP'
+      environment: 'WEBAPP-TEST'
       strategy:
         runOnce:
           deploy:
