@@ -186,7 +186,7 @@ stages:
             
             - task: Bash@3
               displayName: Run UI Test
-              input:
+              inputs:
                 targetType: 'inline'
                 script: |
                   unzip -o $(Pipeline.Workspace)/selenium/selenium.zip -d .
