@@ -78,8 +78,8 @@ stages:
   - stage: Build
     displayName: Build FakeRestAPI
     jobs:
-    - job: BuildFakeRest
-      displayName: Build Archive
+    - job: BuildFakerRest
+      displayName: Build FakerRest Archive
       pool:
         vmImage: 'Ubuntu-18.04'
       steps:
@@ -95,7 +95,7 @@ stages:
         artifact: drop-fakerestapi
     
     - job: BuildSelenium
-      displayName: Build Archive
+      displayName: Build UI Test Archive
       pool:
         vmImage: 'Ubuntu-18.04'
       steps:
@@ -165,8 +165,11 @@ stages:
                   sudo mv chromedriver /usr/bin/chromedriver
                   sudo chown root:root /usr/bin/chromedriver
                   sudo chmod +x /usr/bin/chromedriver
-                  chromium-browser -version
-                  chromedriver --version
+                  
+                  /usr/bin/chromium-browser --version
+                  /usr/bin/chromedriver --version
+
+                  python3 -c "import selenium; print('Selenium Version:', selenium.__version__)"
                 
   - stage: UITest
     displayName: UI Testing
