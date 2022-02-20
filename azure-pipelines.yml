@@ -146,13 +146,19 @@ stages:
                 targetType: 'inline'
                 script: |
                   #! /bin/bash
-                  sudo apt autoremove
-                  sudo apt update
-                  sudo apt upgrade
-                  sudo apt install python3-pip -y
-                  sudo apt install -y chromium-browser
-                  sudo apt install unzip -y
+                  sudo apt-get update
+                  sudo apt-get upgrade -y
+                  sudo apt-get install python3-pip unzip expect -y
+                  sudo apt-get install -y chromium-browser
                   pip3 install selenium
+                  sudo rm -rf chromedriver*
+                  wget https://chromedriver.storage.googleapis.com/<version>/chromedriver_linux64.zip
+                  unzip chromedriver*.zip
+                  sudo mv chromedriver -f /usr/bin
+
+
+                  /usr/bin/chromium-browser -version
+                  /usr/bin/chromedriver -version
                 
   # - stage: UITest
   #   displayName: UI Testing
