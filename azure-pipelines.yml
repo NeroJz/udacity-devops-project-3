@@ -146,11 +146,10 @@ stages:
                 targetType: 'inline'
                 script: |
                   #! /bin/bash
-                  sudo apt-get install software-properties-common -y
-                  sudo apt-add-repository universe -y
                   sudo apt-get autoremove
                   sudo apt-get update
                   sudo apt-get upgrade -y
+                  sudo apt-get install python3.6 -y
                   sudo apt-get install python3-pip unzip expect -y
                   sudo apt-get install -y chromium-browser
                   python3 -m pip install --upgrade pip
@@ -163,6 +162,7 @@ stages:
 
                   /usr/bin/chromium-browser -version
                   /usr/bin/chromedriver -version
+                  python3 -V
 
                   python3 -c "import selenium; print('Selenium Version:', selenium.__version__)"
                 
