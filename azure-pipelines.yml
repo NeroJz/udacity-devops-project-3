@@ -147,10 +147,10 @@ stages:
                 script: |
                   #! /bin/bash
                 
-                  sudo apt-get upgrade -y
-                  sudo apt-get install python3-pip -y
-                  sudo apt-get install unzip -y
-                  sudo apt-get install -y chromium-browser
+                  sudo apt upgrade -y
+                  sudo apt install python3-pip -y
+                  sudo apt install unzip -y
+                  sudo apt install -y chromium-browser
                   pip3 install selenium
 
                   # download chrome driver
