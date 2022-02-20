@@ -150,8 +150,8 @@ stages:
                   sudo apt-get upgrade -y
                   sudo apt-get install python3-pip unzip expect -y
                   sudo apt-get install -y chromium-browser
-                  sudo python3.8 -m pip install --upgrade pip
-                  sudo pip3 install selenium
+                  python3.8 -m pip install --upgrade pip
+                  pip3 install selenium
                   sudo rm -rf chromedriver*
                   wget https://chromedriver.storage.googleapis.com/90.0.4430.24/chromedriver_linux64.zip
                   unzip chromedriver*.zip
