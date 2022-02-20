@@ -96,17 +96,20 @@ stages:
   
   - stage: Deploy
     displayName: Deploy FakeRestAPI
-    pool:
-      vmImage: 'Ubtuntu-18.04'
-    environment: 'FAKEREST-APP'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: AzureWebApp@1
-            displayName: 'Deploy FakeRestAPI app'
-            inputs:
-              azureSubscription: $(subscription)
-              appName: $(appname)
-              appType: webApp
-              package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
+    jobs:
+    - deployment: FakeRestAPI
+      displayName: Deploying FakeRestAPI from Artifact
+      pool:
+        vmImage: 'Ubtuntu-18.04'
+      environment: 'FAKEREST-APP'
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+            - task: AzureWebApp@1
+              displayName: 'Deploy FakeRestAPI app'
+              inputs:
+                azureSubscription: $(subscription)
+                appName: $(appname)
+                appType: webApp
+                package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
