@@ -41,3 +41,7 @@ Output:
 ### Create SSH Key pair
 Prior creating the VM, create the [SSH key pair](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/mac-create-ssh-keys).
 The public SSH key allows the Azure Pipeline to access the VM which in turn can perform specify tasks like UI testing in the VM.
+
+### Upgrade the Python version
+The default version of python in the VM (Ubuntu 18.04) is 3.5. The latest PIP does not support Python 3.5. Please install python 3.8
+by following the instruction [here](https://tecadmin.net/install-python-3-8-ubuntu/).
