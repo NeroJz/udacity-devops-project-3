@@ -91,11 +91,28 @@ stages:
           archiveType: 'zip'
           archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
       - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
-        displayName: 'Upload Package'
+        displayName: 'Upload FakerRestAPI Artifact'
         artifact: drop-fakerestapi
+    
+    - job: Build
+      displayName: Build Archive
+      pool:
+        vmImage: 'Ubuntu-18.04'
+      steps:
+      - task: ArchiveFiles@2
+        displayName: 'Archive Selenium'
+        inputs:
+          rootFolderOrFile: '$(System.DefaultWorkingDirectory)/selenium'
+          includeRootFolder: false
+          archiveType: 'zip'
+          archiveFile: '$(Build.BuildId)/selenium.zip'
+          replaceExistingArchive: true
+      - upload: $(Build.BuildId)/selenium.zip
+        displayName: 'Upload Selenium Artifact'
+        artifact: selenium
   
-  - stage: Deploy
-    displayName: Deploy FakeRestAPI
+  - stage: Deployment
+    displayName: Deploy Artifact(s)
     jobs:
     - deployment: FakeRestAPI
       displayName: Deploying FakeRestAPI from Artifact
@@ -113,3 +130,66 @@ stages:
                 appName: $(appname)
                 appType: webApp
                 package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
+
+    - deployment: VMDeploy
+      displayName: Install Dependencies on VM
+      environment:
+        name: 'WEBAPP-TEST'
+        resourceType: VirtualMachine
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+            - task: Bash@3
+              displayName: 'Install Dependencies'
+              inputs:
+                targetType: 'inline'
+                script: |
+                  #! /bin/bash
+                
+                  sudo apt-get upgrade -y
+                  sudo apt-get install python3-pip -y
+                  sudo apt-get install unzip -y
+                  sudo apt-get install -y chromium-browser
+                  pip3 install selenium
+
+                  # download chrome driver
+                  FILE=chromedriver_linux64.zip
+                  if [ -f "$FILE" ]; then
+                    echo "$FILE exists."
+                  else
+                    wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip
+                  fi
+                  # install chrome driver
+                  unzip chromedriver_linux64.zip
+                  sudo mv chromedriver /usr/bin/chromedriver
+                  sudo chown root:root /usr/bin/chromedriver
+                  sudo chmod +x /usr/bin/chromedriver
+                  chromium-browser -version
+                  chromedriver --version
+                
+  - stage: UITest
+    displayName: UI Testing
+    jobs:
+    - deployment: VMUITest
+      displayName: UI Test In Selenium
+      environment:
+        name: 'WEBAPP-TEST'
+        resourceType: VirtualMachine
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+            - download: current
+              displayName: 'Download Selenium Artifact'
+              artifact: selenium
+            
+            - task: Bash@3
+              displayName: Run UI Test
+              input:
+                targetType: 'inline'
+                script: |
+                  unzip -o $(Pipeline.Workspace)/selenium/selenium.zip -d .
+                  sudo mkdir /var/logs
+                  python3 ui-test.py > ui-logs.log
+                  sudo mv ui-logs.log /var/logs
