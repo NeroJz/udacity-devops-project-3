@@ -147,11 +147,11 @@ stages:
                 script: |
                   #! /bin/bash
                 
-                  sudo apt upgrade -y
-                  sudo apt install python3-pip -y
-                  sudo apt install unzip -y
-                  sudo apt install -y chromium-browser
-                  pip3 install selenium
+                  sudo apt-get upgrade -y
+                  sudo apt-get install python3-pip -y
+                  sudo apt-get install unzip -y
+                  sudo apt-get install -y chromium-browser
+                  pip install -U selenium
 
                   # download chrome driver
                   FILE=chromedriver_linux64.zip
@@ -169,7 +169,7 @@ stages:
                   /usr/bin/chromium-browser --version
                   /usr/bin/chromedriver --version
 
-                  python3 -c "import selenium; print('Selenium Version:', selenium.__version__)"
+                  # python3 -c "import selenium; print('Selenium Version:', selenium.__version__)"
                 
   - stage: UITest
     displayName: UI Testing
