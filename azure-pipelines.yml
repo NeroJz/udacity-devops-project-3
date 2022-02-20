@@ -75,61 +75,61 @@ stages:
   #         environmentServiceNameAzureRM: $(subscription)
   #         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
 
-  # - stage: Build
-  #   displayName: Build FakeRestAPI
-  #   jobs:
-  #   - job: BuildFakerRest
-  #     displayName: Build FakerRest Archive
-  #     pool:
-  #       vmImage: 'Ubuntu-18.04'
-  #     steps:
-  #     - task: ArchiveFiles@2
-  #       displayName: 'Archive FakeRestAPI'
-  #       inputs:
-  #         rootFolderOrFile: '$(System.DefaultWorkingDirectory)/fakerestapi'
-  #         includeRootFolder: false
-  #         archiveType: 'zip'
-  #         archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
-  #     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
-  #       displayName: 'Upload FakerRestAPI Artifact'
-  #       artifact: drop-fakerestapi
+  - stage: Build
+    displayName: Build FakeRestAPI
+    jobs:
+    - job: BuildFakerRest
+      displayName: Build FakerRest Archive
+      pool:
+        vmImage: 'Ubuntu-18.04'
+      steps:
+      - task: ArchiveFiles@2
+        displayName: 'Archive FakeRestAPI'
+        inputs:
+          rootFolderOrFile: '$(System.DefaultWorkingDirectory)/fakerestapi'
+          includeRootFolder: false
+          archiveType: 'zip'
+          archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
+      - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
+        displayName: 'Upload FakerRestAPI Artifact'
+        artifact: drop-fakerestapi
     
-  #   - job: BuildSelenium
-  #     displayName: Build UI Test Archive
-  #     pool:
-  #       vmImage: 'Ubuntu-18.04'
-  #     steps:
-  #     - task: ArchiveFiles@2
-  #       displayName: 'Archive Selenium'
-  #       inputs:
-  #         rootFolderOrFile: '$(System.DefaultWorkingDirectory)/selenium'
-  #         includeRootFolder: false
-  #         archiveType: 'zip'
-  #         archiveFile: '$(Build.BuildId)/selenium.zip'
-  #         replaceExistingArchive: true
-  #     - upload: $(Build.BuildId)/selenium.zip
-  #       displayName: 'Upload Selenium Artifact'
-  #       artifact: selenium
+    - job: BuildSelenium
+      displayName: Build UI Test Archive
+      pool:
+        vmImage: 'Ubuntu-18.04'
+      steps:
+      - task: ArchiveFiles@2
+        displayName: 'Archive Selenium'
+        inputs:
+          rootFolderOrFile: '$(System.DefaultWorkingDirectory)/selenium'
+          includeRootFolder: false
+          archiveType: 'zip'
+          archiveFile: '$(Build.BuildId)/selenium.zip'
+          replaceExistingArchive: true
+      - upload: $(Build.BuildId)/selenium.zip
+        displayName: 'Upload Selenium Artifact'
+        artifact: selenium
   
   - stage: Deployment
     displayName: Deploy Artifact(s)
     jobs:
-    # - deployment: FakeRestAPI
-    #   displayName: Deploying FakeRestAPI from Artifact
-    #   pool:
-    #     vmImage: 'Ubuntu-18.04'
-    #   environment: 'WEBAPP-TEST'
-    #   strategy:
-    #     runOnce:
-    #       deploy:
-    #         steps:
-    #         - task: AzureWebApp@1
-    #           displayName: 'Deploy FakeRestAPI app'
-    #           inputs:
-    #             azureSubscription: $(subscription)
-    #             appName: $(appname)
-    #             appType: webApp
-    #             package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
+    - deployment: FakeRestAPI
+      displayName: Deploying FakeRestAPI from Artifact
+      pool:
+        vmImage: 'Ubuntu-18.04'
+      environment: 'WEBAPP-TEST'
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+            - task: AzureWebApp@1
+              displayName: 'Deploy FakeRestAPI app'
+              inputs:
+                azureSubscription: $(subscription)
+                appName: $(appname)
+                appType: webApp
+                package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
 
     - deployment: VMDeploy
       displayName: Install Dependencies on VM
@@ -160,28 +160,28 @@ stages:
                   /usr/bin/chromium-browser -version
                   /usr/bin/chromedriver -version
                 
-  # - stage: UITest
-  #   displayName: UI Testing
-  #   jobs:
-  #   - deployment: VMUITest
-  #     displayName: UI Test In Selenium
-  #     environment:
-  #       name: 'WEBAPP-TEST'
-  #       resourceType: VirtualMachine
-  #     strategy:
-  #       runOnce:
-  #         deploy:
-  #           steps:
-  #           - download: current
-  #             displayName: 'Download Selenium Artifact'
-  #             artifact: selenium
+  - stage: UITest
+    displayName: UI Testing
+    jobs:
+    - deployment: VMUITest
+      displayName: UI Test In Selenium
+      environment:
+        name: 'WEBAPP-TEST'
+        resourceType: VirtualMachine
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+            - download: current
+              displayName: 'Download Selenium Artifact'
+              artifact: selenium
             
-  #           - task: Bash@3
-  #             displayName: Run UI Test
-  #             inputs:
-  #               targetType: 'inline'
-  #               script: |
-  #                 unzip -o $(Pipeline.Workspace)/selenium/selenium.zip -d .
-  #                 sudo mkdir /var/logs
-  #                 python3 ui-test.py > ui-logs.log
-  #                 sudo mv ui-logs.log /var/logs
+            - task: Bash@3
+              displayName: Run UI Test
+              inputs:
+                targetType: 'inline'
+                script: |
+                  unzip -o $(Pipeline.Workspace)/selenium/selenium.zip -d .
+                  sudo mkdir /var/logs
+                  python3 ui-test.py > ui-logs.log
+                  sudo mv ui-logs.log /var/logs
