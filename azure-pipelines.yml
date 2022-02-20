@@ -188,3 +188,42 @@ stages:
                   sudo mkdir /var/logs
                   python3.8 ui-test.py > ui-logs.log
                   sudo mv ui-logs.log /var/logs
+
+  - stage: IntegrationTests
+    displayName: Integration Tests
+    jobs:
+    - job: PostmanTests
+      displayName: Postman Testing
+      pool:
+        vmImage: 'Ubuntu-18.04'
+      steps:
+      - task: NodeTool@0
+        displayName: Install Node v12
+        inputs:
+          versionSpec: '12.x'
+      
+      - task: CmdLine@2
+        displayName: Install Newman
+        inputs:
+          script: 'npm install newman'
+          workingDirectory: '$(System.DefaultWorkingDirectory)'
+      
+      - task: CmdLine@2
+        displayName: Run Regression Test
+        inputs:
+          script: 'newman run postman/Regression_Test.postman_collection.json -e postman/Regression_Test_Environment.postman_environment.json --delay-request 5000 --bail newman -x --reporters cli,junit --reporter-junit-export Results/RegressionTests.xml'
+          workingDirectory: '$(System.DefaultWorkingDirectory)'
+      
+      - task: CmdLine@2
+        displayName: Run Data Validation Test
+        inputs:
+          script: 'newman run postman/Data_Validation_Test.postman_collection.json -e postman/DATA_VALIDATATION_ENV.postman_environment.json --delay-request 5000 --bail newman -x --reporters cli,junit --reporter-junit-export Results/ValidationTests.xml'
+          workingDirectory: '$(System.DefaultWorkingDirectory)'
+
+      - task: PublishTestResults@2
+        displayName: Publish Postman Test Results
+        condition: always()
+        inputs:
+          testResultsFormat: 'JUnit'
+          testResultsFiles: '$(System.DefaultWorkingDirectory)/Results/*.xml'
+
