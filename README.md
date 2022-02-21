@@ -153,3 +153,11 @@ by following the instruction [here](https://tecadmin.net/install-python-3-8-ubun
 
 - Publish Test Result
 ![Publish Test](./screens/011_Publish_Results.png)
+
+
+### Monitoring & Observability
+- Screenshots of email received
+![email](./screens/012_Email_Alert.png)
+
+- Screenshots of alert rule
+![alert rule](./screens/013_AlertRule.png)
