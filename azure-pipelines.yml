@@ -150,8 +150,8 @@ stages:
                 script: |
                   #! /bin/bash
 
-                  echo ${AZURE_LOG_ANALYTICS_WORKSPACE_ID}
-                  echo ${AZURE_LOG_ANALYTICS_WORKSPACE_PK}
+                  echo $(AZURE_LOG_ANALYTICS_WORKSPACE_ID)
+                  echo $(AZURE_LOG_ANALYTICS_WORKSPACE_PK)
 
                   # sudo apt-get update
                   # sudo apt-get upgrade -y
