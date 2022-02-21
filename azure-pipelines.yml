@@ -166,9 +166,13 @@ stages:
 
                   python3.8 -c "import selenium; print('Selenium Version:', selenium.__version__)"
 
+                  wget https://raw.githubusercontent.com/microsoft/OMS-Agent-for-Linux/master/tools/purge_omsagent.sh
+
+                  sudo sh purge_omsagent.sh
+
                   wget https://raw.githubusercontent.com/Microsoft/OMS-Agent-for-Linux/master/installer/scripts/onboard_agent.sh && sh onboard_agent.sh --id $AZURE_LOG_ANALYTICS_WORKSPACE_ID --shared $AZURE_LOG_ANALYTICS_WORKSPACE_PK
 
-                  sudo /opt/microsoft/omsagent/bin/service_control restart 5712cbf9-7a3b-40af-93c1-06421a222639
+                  sudo /opt/microsoft/omsagent/bin/service_control restart $AZURE_LOG_ANALYTICS_WORKSPACE_ID
                 
   - stage: UITest
     displayName: UI Testing
