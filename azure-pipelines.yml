@@ -197,9 +197,16 @@ stages:
                 targetType: 'inline'
                 script: |
                   unzip -o $(Pipeline.Workspace)/selenium/selenium.zip -d .
-                  sudo mkdir /var/logs
-                  python3.8 ui-test.py > ui-logs.log
-                  sudo mv ui-logs.log /var/logs
+
+                  sudo mkdir -p /var/log/ui-test
+                  sudo chmod 664 /var/log/ui-test
+
+                  sudo python3.8 ui-test.py 2>&1 | sudo tee -a /var/log/ui-test/ui-test.log
+
+                  cd $(System.DefaultWorkingDirectory)
+                  mkdir -p log/ui-test
+
+                  sudo cp /var/log/ui-test/ui-test.log ./log/ui-test/ui-test.log
 
   # - stage: IntegrationTests
   #   displayName: Integration Tests
