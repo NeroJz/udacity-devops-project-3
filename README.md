@@ -170,3 +170,6 @@ by following the instruction [here](https://tecadmin.net/install-python-3-8-ubun
 
 - Screenshots of alert rule
 ![alert rule](./screens/013_AlertRule.png)
+
+- Screenshot of Analytic Log for UI Test
+![Analytic Log](./screens/016_Selenium_log.png)
