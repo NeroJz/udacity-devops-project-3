@@ -167,13 +167,13 @@ stages:
 
                   python3.8 -c "import selenium; print('Selenium Version:', selenium.__version__)"
 
-                  wget https://raw.githubusercontent.com/microsoft/OMS-Agent-for-Linux/master/tools/purge_omsagent.sh
+                  # wget https://raw.githubusercontent.com/microsoft/OMS-Agent-for-Linux/master/tools/purge_omsagent.sh
 
-                  sudo sh purge_omsagent.sh
+                  # sudo sh purge_omsagent.sh
 
-                  wget https://raw.githubusercontent.com/Microsoft/OMS-Agent-for-Linux/master/installer/scripts/onboard_agent.sh && sh onboard_agent.sh -w ${AZURE_LOG_ANALYTICS_WORKSPACE_ID} -s ${AZURE_LOG_ANALYTICS_WORKSPACE_PK}
+                  # wget https://raw.githubusercontent.com/Microsoft/OMS-Agent-for-Linux/master/installer/scripts/onboard_agent.sh && sh onboard_agent.sh -w ${AZURE_LOG_ANALYTICS_WORKSPACE_ID} -s ${AZURE_LOG_ANALYTICS_WORKSPACE_PK}
                   
-                  sudo /opt/microsoft/omsagent/bin/service_control restart ${AZURE_LOG_ANALYTICS_WORKSPACE_ID}
+                  # sudo /opt/microsoft/omsagent/bin/service_control restart ${AZURE_LOG_ANALYTICS_WORKSPACE_ID}
                 
   - stage: UITest
     displayName: UI Testing
@@ -198,15 +198,14 @@ stages:
                 script: |
                   unzip -o $(Pipeline.Workspace)/selenium/selenium.zip -d .
 
-                  sudo mkdir -p /var/log/ui-test
-                  sudo chmod 664 /var/log/ui-test
+                  sudo mkdir -p /var/logs/ui-test
 
-                  sudo python3.8 ui-test.py 2>&1 | sudo tee -a /var/log/ui-test/ui-test.log
+                  sudo python3.8 ui-test.py 2>&1 | sudo tee -a /var/logs/ui-test/ui-test.log
 
                   cd $(System.DefaultWorkingDirectory)
                   mkdir -p log/ui-test
 
-                  sudo cp /var/log/ui-test/ui-test.log ./log/ui-test/ui-test.log
+                  sudo cp /var/logs/ui-test/ui-test.log ./log/ui-test/ui-test.log
 
             - task: PublishPipelineArtifact@1
               displayName: Archive selenium logs
