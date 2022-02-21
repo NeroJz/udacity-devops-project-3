@@ -37,6 +37,15 @@ Output:
     - Client ID
     - Client Credential/Password
 
+### Create the Azure Analytic Log
+1. Run the create-log-analytic.sh to create workspace for analytic log.
+2. Copy the workspace ID and primary key from the Azure Portal (based on the VM that you want to link)
+![Agent Management](./screens/015_Agent_Management.png)
+3. Save these value in the environment variable of Azure Pipeline
+![Variable](./screens/014_variable.png)
+The pipeline uses WORKSPACE_ID and WORKSPACE_PK respectively.
+
+
 ### Terraform
 Replace the following property of examples/main_example.tf with the value from Create Storage Account step.
 
