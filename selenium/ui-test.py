@@ -41,11 +41,15 @@ def login (user, password):
 
 def addItem(driver):
   logging("Test adding item to cart")
-  buttons = driver.find_elements(By.CSS_SELECTOR, '.inventory_item_description > .pricebar > button')
+  items = driver.find_elements(By.CSS_SELECTOR, '.inventory_item')
 
-  for i in range(0, len(buttons)):
-    logging("Add item {} ({}) to cart".format(i+1, buttons[i]))
-    buttons[i].click()
+  for i in range(0, len(items)):
+    item = items[i]
+
+    item_name = item.find_element(By.CLASS_NAME, 'inventory_item_name').text
+    logging("Add item: {}".format(item_name))
+    button = item.find_element(By.CSS_SELECTOR, '.pricebar > button')
+    button.click()
 
   totalItemOnCartLabel = driver.find_element(By.CLASS_NAME, 'shopping_cart_badge').text
   testItemAdded = "6"
@@ -60,11 +64,15 @@ def addItem(driver):
 
 def removeItem(driver):
   logging("Test remove item from the cart")
-  buttons = driver.find_elements(By.CSS_SELECTOR, '.inventory_item_description > .pricebar > button')
+  items = driver.find_elements(By.CSS_SELECTOR, '.inventory_item')
 
-  for i in range(0, len(buttons)):
-    logging("Remove item {} ({}) from the cart".format(i+1, buttons[i]))
-    buttons[i].click()
+  for i in range(0, len(items)):
+    item = items[i]
+
+    item_name = item.find_element(By.CLASS_NAME, 'inventory_item_name').text
+    logging("Remove item: {}".format(item_name))
+    button = item.find_element(By.CSS_SELECTOR, '.pricebar > button')
+    button.click()
   
   totalItemOnCartLabel = driver.find_element(By.CLASS_NAME, 'shopping_cart_link').text
   testItemRemove = "6"
