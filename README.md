@@ -165,7 +165,7 @@ by following the instruction [here](https://tecadmin.net/install-python-3-8-ubun
 
 
 ### Monitoring & Observability
-- Screenshots of email received
+- Screenshots of email received <br/>
 ![email](./screens/012_Email_Alert.png)
 
 - Screenshots of alert rule
