@@ -5,75 +5,75 @@ variables:
   appname: 'kumhoe-AppService'
   subscription: 'udacity-project-connection'
 stages:
-  - stage: ProvisionIaC
-    displayName: Provisioning Azure Resources
-    jobs:
-    - job: ProvisionAppService
-      displayName: Provisioning App Service
-      pool:
-        vmImage: 'Ubuntu-18.04'
-      steps:
-      - task: DownloadSecureFile@1
-        name: terraformtfvars
-        displayName: Download terraform.tfvars
-        inputs:
-          secureFile: 'terraform.tfvars'
+  # - stage: ProvisionIaC
+  #   displayName: Provisioning Azure Resources
+  #   jobs:
+  #   - job: ProvisionAppService
+  #     displayName: Provisioning App Service
+  #     pool:
+  #       vmImage: 'Ubuntu-18.04'
+  #     steps:
+  #     - task: DownloadSecureFile@1
+  #       name: terraformtfvars
+  #       displayName: Download terraform.tfvars
+  #       inputs:
+  #         secureFile: 'terraform.tfvars'
 
-      - task: DownloadSecureFile@1
-        name: maintf
-        displayName: Download main.tf
-        inputs:
-          secureFile: 'main.tf'
+  #     - task: DownloadSecureFile@1
+  #       name: maintf
+  #       displayName: Download main.tf
+  #       inputs:
+  #         secureFile: 'main.tf'
 
-      - task: InstallSSHKey@0
-        name: InstallSSHKey
-        displayName: Install SSH Key
-        inputs:
-          knownHostsEntry: 'default'
-          sshPublicKey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC19L6GYKYW6buRhtCLBGsBCd73hziaEvsoKZJqD5D0KAmrMyKHMIBSI9V21NuVr/Wyf6VyAWruu7yc0pu996Izd29GHU4viakRSTDByhhi5IX1x2FfS/NKXWtG+ALUNMkfJ+98YqpqV9apAvEoEpDMtNC3UEnDzaI0CF3r4dzlGLeVbF6ya4XRD1HtANtoA5R+eYyWHSz089crrzXvXg7BQywVioiGTw1OiHxv3GWKyKiIdvJYTWWLGro1npqm5GfGUxPNpJPSgAAHk4h1hDDAv/D3aXgMCBuuU6tOE1KiX6+04pcE35j5HTIH9YIN+5Dtf8lfy/okJEM/E1tBTpVchs9p0YGetElsmr6Ghs7IKzF99L714/gNgjIllZ3yeUFemsmRwYKgPmjEhQfawglbORQafXqUsDBIOTHknRPDE6yv9aQbf7RHDXQ6XGCSGjQ/vBE6rw//fk2t7gYcDsgv4wppasBMTa4BygUWK+tye7B1k8cmkwPJgW8aHtK1PQbsDgYl+GNjWYtRXr79PfLD5Gtda5dJCwocD5FReSok437AbHQblgkz7b8YXyhLS3318dSmoGcKHUq4kZf7tCGu/YUH9sH68mcyJSu4XKm1nmA9SJ9nb8jn2nA8uRidjLVHYSxT6LRhcNUgSCbg8i0JDBfIT8IUjOUiazpFQVVALw== MacBookPro@MacBook-Pro.local'
-          sshKeySecureFile: 'id_rsa'
+  #     - task: InstallSSHKey@0
+  #       name: InstallSSHKey
+  #       displayName: Install SSH Key
+  #       inputs:
+  #         knownHostsEntry: 'default'
+  #         sshPublicKey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC19L6GYKYW6buRhtCLBGsBCd73hziaEvsoKZJqD5D0KAmrMyKHMIBSI9V21NuVr/Wyf6VyAWruu7yc0pu996Izd29GHU4viakRSTDByhhi5IX1x2FfS/NKXWtG+ALUNMkfJ+98YqpqV9apAvEoEpDMtNC3UEnDzaI0CF3r4dzlGLeVbF6ya4XRD1HtANtoA5R+eYyWHSz089crrzXvXg7BQywVioiGTw1OiHxv3GWKyKiIdvJYTWWLGro1npqm5GfGUxPNpJPSgAAHk4h1hDDAv/D3aXgMCBuuU6tOE1KiX6+04pcE35j5HTIH9YIN+5Dtf8lfy/okJEM/E1tBTpVchs9p0YGetElsmr6Ghs7IKzF99L714/gNgjIllZ3yeUFemsmRwYKgPmjEhQfawglbORQafXqUsDBIOTHknRPDE6yv9aQbf7RHDXQ6XGCSGjQ/vBE6rw//fk2t7gYcDsgv4wppasBMTa4BygUWK+tye7B1k8cmkwPJgW8aHtK1PQbsDgYl+GNjWYtRXr79PfLD5Gtda5dJCwocD5FReSok437AbHQblgkz7b8YXyhLS3318dSmoGcKHUq4kZf7tCGu/YUH9sH68mcyJSu4XKm1nmA9SJ9nb8jn2nA8uRidjLVHYSxT6LRhcNUgSCbg8i0JDBfIT8IUjOUiazpFQVVALw== MacBookPro@MacBook-Pro.local'
+  #         sshKeySecureFile: 'id_rsa'
 
-      - task: Bash@3
-        displayName: Copy terraform.tfvars
-        inputs:
-          targetType: 'inline'
-          script: cp $(Agent.TempDirectory)/terraform.tfvars $(System.DefaultWorkingDirectory)/terraform
+  #     - task: Bash@3
+  #       displayName: Copy terraform.tfvars
+  #       inputs:
+  #         targetType: 'inline'
+  #         script: cp $(Agent.TempDirectory)/terraform.tfvars $(System.DefaultWorkingDirectory)/terraform
 
-      - task: Bash@3
-        displayName: Copy main.tf
-        inputs:
-          targetType: 'inline'
-          script: cp $(Agent.TempDirectory)/main.tf $(System.DefaultWorkingDirectory)/terraform
+  #     - task: Bash@3
+  #       displayName: Copy main.tf
+  #       inputs:
+  #         targetType: 'inline'
+  #         script: cp $(Agent.TempDirectory)/main.tf $(System.DefaultWorkingDirectory)/terraform
       
-      - task: TerraformInstaller@0
-        displayName: Install Terraform
-        inputs:
-          terraformVersion: '1.1.4'
+  #     - task: TerraformInstaller@0
+  #       displayName: Install Terraform
+  #       inputs:
+  #         terraformVersion: '1.1.4'
 
-      - task: TerraformTaskV2@2
-        inputs:
-          provider: 'azurerm'
-          command: 'init'
-          backendServiceArm: $(subscription)
-          backendAzureRmResourceGroupName: 'tfstate'
-          backendAzureRmStorageAccountName: 'tfstate16825'
-          backendAzureRmContainerName: 'tfstate'
-          backendAzureRmKey: 'terraform.state'
-          workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+  #     - task: TerraformTaskV2@2
+  #       inputs:
+  #         provider: 'azurerm'
+  #         command: 'init'
+  #         backendServiceArm: $(subscription)
+  #         backendAzureRmResourceGroupName: 'tfstate'
+  #         backendAzureRmStorageAccountName: 'tfstate16825'
+  #         backendAzureRmContainerName: 'tfstate'
+  #         backendAzureRmKey: 'terraform.state'
+  #         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
       
-      - task: TerraformTaskV2@2
-        inputs:
-          provider: 'azurerm'
-          command: 'plan'
-          environmentServiceNameAzureRM: $(subscription)
-          workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+  #     - task: TerraformTaskV2@2
+  #       inputs:
+  #         provider: 'azurerm'
+  #         command: 'plan'
+  #         environmentServiceNameAzureRM: $(subscription)
+  #         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
       
-      - task: TerraformTaskV2@2
-        inputs:
-          provider: 'azurerm'
-          command: 'apply'
-          environmentServiceNameAzureRM: $(subscription)
-          workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+  #     - task: TerraformTaskV2@2
+  #       inputs:
+  #         provider: 'azurerm'
+  #         command: 'apply'
+  #         environmentServiceNameAzureRM: $(subscription)
+  #         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
 
   - stage: Build
     displayName: Build FakeRestAPI
@@ -131,49 +131,49 @@ stages:
                 appType: webApp
                 package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
 
-    - deployment: VMDeploy
-      displayName: Install Dependencies on VM
-      environment:
-        name: 'WEBAPP-TEST'
-        resourceType: VirtualMachine
-      strategy:
-        runOnce:
-          deploy:
-            steps:
-            - task: Bash@3
-              displayName: 'Install Dependencies'
-              env:
-                AZURE_LOG_ANALYTICS_WORKSPACE_ID: $(WORKSPACE_ID)
-                AZURE_LOG_ANALYTICS_WORKSPACE_PK: $(WORKSPACE_PK)
-              inputs:
-                targetType: 'inline'
-                script: |
-                  #! /bin/bash
+    # - deployment: VMDeploy
+    #   displayName: Install Dependencies on VM
+    #   environment:
+    #     name: 'WEBAPP-TEST'
+    #     resourceType: VirtualMachine
+    #   strategy:
+    #     runOnce:
+    #       deploy:
+    #         steps:
+    #         - task: Bash@3
+    #           displayName: 'Install Dependencies'
+    #           env:
+    #             AZURE_LOG_ANALYTICS_WORKSPACE_ID: $(WORKSPACE_ID)
+    #             AZURE_LOG_ANALYTICS_WORKSPACE_PK: $(WORKSPACE_PK)
+    #           inputs:
+    #             targetType: 'inline'
+    #             script: |
+    #               #! /bin/bash
 
-                  sudo apt-get update
-                  sudo apt-get upgrade -y
-                  sudo apt-get install python3-pip unzip expect -y
-                  sudo apt-get install -y chromium-browser
-                  python3.8 -m pip install --upgrade pip
-                  pip3 install selenium
-                  sudo rm -rf chromedriver*
-                  wget https://chromedriver.storage.googleapis.com/90.0.4430.24/chromedriver_linux64.zip
-                  unzip chromedriver*.zip
-                  sudo mv chromedriver -f /usr/bin
+    #               sudo apt-get update
+    #               sudo apt-get upgrade -y
+    #               sudo apt-get install python3-pip unzip expect -y
+    #               sudo apt-get install -y chromium-browser
+    #               python3.8 -m pip install --upgrade pip
+    #               pip3 install selenium
+    #               sudo rm -rf chromedriver*
+    #               wget https://chromedriver.storage.googleapis.com/90.0.4430.24/chromedriver_linux64.zip
+    #               unzip chromedriver*.zip
+    #               sudo mv chromedriver -f /usr/bin
 
-                  /usr/bin/chromium-browser -version
-                  /usr/bin/chromedriver -version
-                  python3.8 -V
+    #               /usr/bin/chromium-browser -version
+    #               /usr/bin/chromedriver -version
+    #               python3.8 -V
 
-                  python3.8 -c "import selenium; print('Selenium Version:', selenium.__version__)"
+    #               python3.8 -c "import selenium; print('Selenium Version:', selenium.__version__)"
 
-                  # wget https://raw.githubusercontent.com/microsoft/OMS-Agent-for-Linux/master/tools/purge_omsagent.sh
+    #               # wget https://raw.githubusercontent.com/microsoft/OMS-Agent-for-Linux/master/tools/purge_omsagent.sh
 
-                  # sudo sh purge_omsagent.sh
+    #               # sudo sh purge_omsagent.sh
 
-                  # wget https://raw.githubusercontent.com/Microsoft/OMS-Agent-for-Linux/master/installer/scripts/onboard_agent.sh && sh onboard_agent.sh -w ${AZURE_LOG_ANALYTICS_WORKSPACE_ID} -s ${AZURE_LOG_ANALYTICS_WORKSPACE_PK}
+    #               # wget https://raw.githubusercontent.com/Microsoft/OMS-Agent-for-Linux/master/installer/scripts/onboard_agent.sh && sh onboard_agent.sh -w ${AZURE_LOG_ANALYTICS_WORKSPACE_ID} -s ${AZURE_LOG_ANALYTICS_WORKSPACE_PK}
                   
-                  # sudo /opt/microsoft/omsagent/bin/service_control restart ${AZURE_LOG_ANALYTICS_WORKSPACE_ID}
+    #               # sudo /opt/microsoft/omsagent/bin/service_control restart ${AZURE_LOG_ANALYTICS_WORKSPACE_ID}
                 
   - stage: UITest
     displayName: UI Testing
@@ -215,94 +215,94 @@ stages:
                 targetPath: '$(System.DefaultWorkingDirectory)/log/ui-test'
                 artifactName: 'drop-selenium-logs'
 
-  - stage: IntegrationTests
-    displayName: Integration Tests
-    jobs:
-    - job: PostmanTests
-      displayName: Postman Testing
-      pool:
-        vmImage: 'Ubuntu-18.04'
-      steps:
-      - task: NodeTool@0
-        displayName: Install Node v12
-        inputs:
-          versionSpec: '12.x'
+  # - stage: IntegrationTests
+  #   displayName: Integration Tests
+  #   jobs:
+  #   - job: PostmanTests
+  #     displayName: Postman Testing
+  #     pool:
+  #       vmImage: 'Ubuntu-18.04'
+  #     steps:
+  #     - task: NodeTool@0
+  #       displayName: Install Node v12
+  #       inputs:
+  #         versionSpec: '12.x'
       
-      - task: CmdLine@2
-        displayName: Install Newman
-        inputs:
-          script: 'npm install newman'
-          workingDirectory: '$(System.DefaultWorkingDirectory)'
+  #     - task: CmdLine@2
+  #       displayName: Install Newman
+  #       inputs:
+  #         script: 'npm install newman'
+  #         workingDirectory: '$(System.DefaultWorkingDirectory)'
       
-      - task: CmdLine@2
-        displayName: Run Regression Test
-        inputs:
-          script: 'newman run postman/Regression_Test.postman_collection.json -e postman/Regression_Test_Environment.postman_environment.json --delay-request 5000 --bail newman -x --reporters cli,junit --reporter-junit-export Results/RegressionTests.xml'
-          workingDirectory: '$(System.DefaultWorkingDirectory)'
+  #     - task: CmdLine@2
+  #       displayName: Run Regression Test
+  #       inputs:
+  #         script: 'newman run postman/Regression_Test.postman_collection.json -e postman/Regression_Test_Environment.postman_environment.json --delay-request 5000 --bail newman -x --reporters cli,junit --reporter-junit-export Results/RegressionTests.xml'
+  #         workingDirectory: '$(System.DefaultWorkingDirectory)'
       
-      - task: CmdLine@2
-        displayName: Run Data Validation Test
-        inputs:
-          script: 'newman run postman/Data_Validation_Test.postman_collection.json -e postman/DATA_VALIDATATION_ENV.postman_environment.json --delay-request 5000 --bail newman -x --reporters cli,junit --reporter-junit-export Results/ValidationTests.xml'
-          workingDirectory: '$(System.DefaultWorkingDirectory)'
+  #     - task: CmdLine@2
+  #       displayName: Run Data Validation Test
+  #       inputs:
+  #         script: 'newman run postman/Data_Validation_Test.postman_collection.json -e postman/DATA_VALIDATATION_ENV.postman_environment.json --delay-request 5000 --bail newman -x --reporters cli,junit --reporter-junit-export Results/ValidationTests.xml'
+  #         workingDirectory: '$(System.DefaultWorkingDirectory)'
 
-      - task: PublishPipelineArtifact@1
-        displayName: Publish Postman Test Result
-        inputs:
-          targetPath: '$(System.DefaultWorkingDirectory)/Results'
-          artifactName: 'drop-postman-result'
+  #     - task: PublishPipelineArtifact@1
+  #       displayName: Publish Postman Test Result
+  #       inputs:
+  #         targetPath: '$(System.DefaultWorkingDirectory)/Results'
+  #         artifactName: 'drop-postman-result'
 
-      - task: PublishTestResults@2
-        displayName: Publish Postman Test Results
-        condition: always()
-        inputs:
-          testResultsFormat: 'JUnit'
-          testResultsFiles: '$(System.DefaultWorkingDirectory)/Results/*.xml'
+  #     - task: PublishTestResults@2
+  #       displayName: Publish Postman Test Results
+  #       condition: always()
+  #       inputs:
+  #         testResultsFormat: 'JUnit'
+  #         testResultsFiles: '$(System.DefaultWorkingDirectory)/Results/*.xml'
 
-  - stage: PerformanceTest
-    displayName: JMeter Test
-    jobs:
-      - job: JMeterTest
-        displayName: Performance Test with JMeter
-        pool:
-          vmImage: 'Ubuntu-18.04'
-        steps:
-        - task: JMeterInstaller@0
-          inputs:
-            jmeterVersion: '5.4.2'
+  # - stage: PerformanceTest
+  #   displayName: JMeter Test
+  #   jobs:
+  #     - job: JMeterTest
+  #       displayName: Performance Test with JMeter
+  #       pool:
+  #         vmImage: 'Ubuntu-18.04'
+  #       steps:
+  #       - task: JMeterInstaller@0
+  #         inputs:
+  #           jmeterVersion: '5.4.2'
 
-        - task: Bash@3
-          displayName: Create JMeter Log Folder
-          inputs:
-            targetType: 'inline'
-            script: 'mkdir -p log/jmeter'
+  #       - task: Bash@3
+  #         displayName: Create JMeter Log Folder
+  #         inputs:
+  #           targetType: 'inline'
+  #           script: 'mkdir -p log/jmeter'
 
-        - task: Bash@3
-          displayName: Endurance Test
-          inputs:
-            targetType: 'inline'
-            script: 'jmeter -n -t jmeter/Endurance_Test.jmx -Jresdir=log/jmeter/endurance-test-result.csv -l log/jmeter/report/enduranceresults.jtl -e -o log/jmeter/endurancereport -j log/jmeter/endurance-test.log'
+  #       - task: Bash@3
+  #         displayName: Endurance Test
+  #         inputs:
+  #           targetType: 'inline'
+  #           script: 'jmeter -n -t jmeter/Endurance_Test.jmx -Jresdir=log/jmeter/endurance-test-result.csv -l log/jmeter/report/enduranceresults.jtl -e -o log/jmeter/endurancereport -j log/jmeter/endurance-test.log'
 
-        - task: Bash@3
-          displayName: Stress Test
-          inputs:
-            targetType: 'inline'
-            script: 'jmeter -n -t jmeter/Stress_Test.jmx -Jresdir=log/jmeter/stress-test-result.csv -l log/jmeter/report/stressresults.jtl -e -o log/jmeter/stressreport -j log/jmeter/stress-test.log'
+  #       - task: Bash@3
+  #         displayName: Stress Test
+  #         inputs:
+  #           targetType: 'inline'
+  #           script: 'jmeter -n -t jmeter/Stress_Test.jmx -Jresdir=log/jmeter/stress-test-result.csv -l log/jmeter/report/stressresults.jtl -e -o log/jmeter/stressreport -j log/jmeter/stress-test.log'
 
-        - task: ArchiveFiles@2
-          displayName: Archive JMeter endurance test HTML report
-          inputs:
-            rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/jmeter/endurancereport'
-            includeRootFolder: false
-            archiveType: 'zip'
-            archiveFile: '$(System.DefaultWorkingDirectory)/log/jmeter/endurancereport-$(Build.BuildId).zip'
-            verbose: true
+  #       - task: ArchiveFiles@2
+  #         displayName: Archive JMeter endurance test HTML report
+  #         inputs:
+  #           rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/jmeter/endurancereport'
+  #           includeRootFolder: false
+  #           archiveType: 'zip'
+  #           archiveFile: '$(System.DefaultWorkingDirectory)/log/jmeter/endurancereport-$(Build.BuildId).zip'
+  #           verbose: true
 
-        - task: ArchiveFiles@2
-          displayName: Archive JMeter stress test HTML report
-          inputs:
-            rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/jmeter/stressreport'
-            includeRootFolder: false
-            archiveType: 'zip'
-            archiveFile: '$(System.DefaultWorkingDirectory)/log/jmeter/stressreport-$(Build.BuildId).zip'
-            verbose: true
+  #       - task: ArchiveFiles@2
+  #         displayName: Archive JMeter stress test HTML report
+  #         inputs:
+  #           rootFolderOrFile: '$(System.DefaultWorkingDirectory)/log/jmeter/stressreport'
+  #           includeRootFolder: false
+  #           archiveType: 'zip'
+  #           archiveFile: '$(System.DefaultWorkingDirectory)/log/jmeter/stressreport-$(Build.BuildId).zip'
+  #           verbose: true

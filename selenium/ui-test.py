@@ -3,13 +3,18 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.common.by import By
 import datetime
+import logging
 
 def timestamp():
     ts = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     return (ts + '\t')
 
-def logging(msg):
-  print("{}: {}".format(timestamp(), msg))
+def custom_loging(msg):
+  # print("{}: {}".format(timestamp(), msg))
+  logging.basicConfig(
+    format='%(asctime)s %(levelname)-8s %(msg)s',
+    level=logging.INFO,
+    datefmt='%Y-%m-%d %H:%M:%S')
 
 # Start the browser and login with standard_user
 def login (user, password):
@@ -21,68 +26,68 @@ def login (user, password):
     options.add_argument("--disable-dev-shm-usage")
     driver = webdriver.Chrome(options=options)
     # driver = webdriver.Chrome()
-    logging("Browser started successfully. Navigating to the demo page to login.")
+    custom_loging("Browser started successfully. Navigating to the demo page to login.")
     driver.get('https://www.saucedemo.com/')
 
     # Check login
-    logging('Start Login: username: {}, password: {}'.format(user, password))
+    custom_loging('Start Login: username: {}, password: {}'.format(user, password))
     driver.find_element(By.CSS_SELECTOR, "input[name='user-name']").send_keys(user)
     driver.find_element(By.CSS_SELECTOR, "input[name='password']").send_keys(password)
     driver.find_element(By.ID, "login-button").click()
 
-    logging("Check successfully navigate to inventory.html")
+    custom_loging("Check successfully navigate to inventory.html")
     # By comparing the Page Label
     testLabel = "products"
     pageLabel = driver.find_element(By.CSS_SELECTOR, "#header_container .header_secondary_container .title").text
-    logging("inventory.html label: {}".format(pageLabel))
+    custom_loging("inventory.html label: {}".format(pageLabel))
     assert testLabel == pageLabel.lower(), "The label should be 'PRODUCTS'"
 
-    logging("Login successfully")
+    custom_loging("Login successfully")
     return driver
 
 
 def addItem(driver):
-  logging("Test adding item to cart")
+  custom_loging("Test adding item to cart")
   items = driver.find_elements(By.CSS_SELECTOR, '.inventory_item')
 
   for i in range(0, len(items)):
     item = items[i]
 
     item_name = item.find_element(By.CLASS_NAME, 'inventory_item_name').text
-    logging("Add item: {}".format(item_name))
+    custom_loging("Add item: {}".format(item_name))
     button = item.find_element(By.CSS_SELECTOR, '.pricebar > button')
     button.click()
 
   totalItemOnCartLabel = driver.find_element(By.CLASS_NAME, 'shopping_cart_badge').text
   testItemAdded = "6"
 
-  logging("Total tested item added to cart: {}".format(testItemAdded))
-  logging("Total item added to cart: {}".format(totalItemOnCartLabel))
+  custom_loging("Total tested item added to cart: {}".format(testItemAdded))
+  custom_loging("Total item added to cart: {}".format(totalItemOnCartLabel))
   assert testItemAdded == totalItemOnCartLabel, "Total added item on cart not matched"
 
-  logging("All item added to cart successfully")
+  custom_loging("All item added to cart successfully")
   return driver
 
 
 def removeItem(driver):
-  logging("Test remove item from the cart")
+  custom_loging("Test remove item from the cart")
   items = driver.find_elements(By.CSS_SELECTOR, '.inventory_item')
 
   for i in range(0, len(items)):
     item = items[i]
 
     item_name = item.find_element(By.CLASS_NAME, 'inventory_item_name').text
-    logging("Remove item: {}".format(item_name))
+    custom_loging("Remove item: {}".format(item_name))
     button = item.find_element(By.CSS_SELECTOR, '.pricebar > button')
     button.click()
   
   totalItemOnCartLabel = driver.find_element(By.CLASS_NAME, 'shopping_cart_link').text
   testItemRemove = "6"
 
-  logging("Total tested item remove from the to cart: {}".format(testItemRemove))
+  custom_loging("Total tested item remove from the to cart: {}".format(testItemRemove))
   assert "" == totalItemOnCartLabel, "Total added item on cart not matched"
 
-  logging("All item removed from cart successfully")
+  custom_loging("All item removed from cart successfully")
   return driver
 
 
@@ -91,5 +96,5 @@ if __name__ == "__main__":
   addItem(driver)
   removeItem(driver)
 
-  logging("UI Tests are successfully completed")
+  custom_loging("UI Tests are successfully completed")
 
