@@ -20,7 +20,7 @@ def custom_loging(msg):
 
 # Start the browser and login with standard_user
 def login (user, password):
-    print ('Starting the browser...')
+    # print ('Starting the browser...')
     # --uncomment when running in Azure DevOps.
     options = ChromeOptions()
     options.add_argument("--headless")
