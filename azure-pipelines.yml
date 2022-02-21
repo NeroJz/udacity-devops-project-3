@@ -167,7 +167,7 @@ stages:
                     AZURE_LOG_ANALYTICS_WORKSPACE_ID: $(WORKSPACE_ID)
                     AZURE_LOG_ANALYTICS_WORKSPACE_PK: $(WORKSPACE_PK)
 
-                  wget https://raw.githubusercontent.com/Microsoft/OMS-Agent-for-Linux/master/installer/scripts/onboard_agent.sh && sh onboard_agent.sh --id ${AZURE_LOG_ANALYTICS_WORKSPACE_ID} --shared ${AZURE_LOG_ANALYTICS_WORKSPACE_PK}
+                  wget https://raw.githubusercontent.com/Microsoft/OMS-Agent-for-Linux/master/installer/scripts/onboard_agent.sh && sh onboard_agent.sh --id ${WORKSPACE_ID} --shared ${WORKSPACE_PK}
                   sudo /opt/microsoft/omsagent/bin/service_control restart ${AZURE_LOG_ANALYTICS_WORKSPACE_ID}
                 
   - stage: UITest
