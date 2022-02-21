@@ -38,7 +38,7 @@ Output:
     - Client Credential/Password
 
 ### Terraform
-Replace the following property of terraform/main_example.tf with the value from Create Storage Account step.
+Replace the following property of examples/main_example.tf with the value from Create Storage Account step.
 
 | Property | Value |
 | ----------- | ----------- |
@@ -48,7 +48,7 @@ Replace the following property of terraform/main_example.tf with the value from 
 | access_key | ACCOUNT_KEY |
 
 
-Replace the following property of terraform/terraform_example.tfvars with the value from Create Service Principal.
+Replace the following property of examples/terraform_example.tfvars with the value from Create Service Principal.
 
 | Property | Value |
 | ----------- | ----------- |
@@ -57,8 +57,8 @@ Replace the following property of terraform/terraform_example.tfvars with the va
 | client_secret | Client Credential/Password |
 | tenant_id | TENANT_ID |
 
-Rename terraform/main_example.tf as terraform/main.tf.
-Rename terraform/terraform_example.tfvars as terraform/terraform.tfvars.
+Rename examples/main_example.tf as examples/main.tf.
+Rename examples/terraform_example.tfvars as examples/terraform.tfvars.
 
 Upload both files to the library of Azure Pipeline.
 
