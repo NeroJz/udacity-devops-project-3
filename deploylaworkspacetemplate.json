@@ -1,0 +1,52 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workspaceName": {
+            "type": "string",
+            "defaultValue": "udacity",
+            "metadata": {
+                "description": "Name of the workspace."
+            }
+        },
+        "sku": {
+            "type": "string",
+            "allowedValues": [
+                "Standalone",
+                "PerNode",
+                "PerGB2018"
+            ],
+            "defaultValue": "PerGB2018",
+            "metadata": {
+                "description": "Available Service Tier (Standalone, PerNode, PerGB2018)."
+            }
+        },
+        "location": {
+            "type": "string",
+            "allowedValues": [
+                "eastus",
+                "westus"
+            ],
+            "defaultValue": "eastus",
+            "metadata": {
+                "description": "Specifies the location for the workspace."
+            }
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.OperationalInsights/workspaces",
+            "name": "[parameters('workspaceName')]",
+            "apiVersion": "2020-08-01",
+            "location": "[parameters('location')]",
+            "properties": {
+                "sku": {
+                    "name": "[parameters('sku')]"
+                },
+                "features": {
+                    "searchVersion": 1
+                }
+            }
+        }
+    ]
+}
