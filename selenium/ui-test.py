@@ -5,16 +5,18 @@ from selenium.webdriver.common.by import By
 import datetime
 import logging
 
+logging.basicConfig(
+  format='%(asctime)s %(levelname)-8s %(msg)s',
+  level=logging.INFO,
+  datefmt='%Y-%m-%d %H:%M:%S')
+
 def timestamp():
     ts = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     return (ts + '\t')
 
 def custom_loging(msg):
   # print("{}: {}".format(timestamp(), msg))
-  logging.basicConfig(
-    format='%(asctime)s %(levelname)-8s %(msg)s',
-    level=logging.INFO,
-    datefmt='%Y-%m-%d %H:%M:%S')
+  logging.info(msg)
 
 # Start the browser and login with standard_user
 def login (user, password):
