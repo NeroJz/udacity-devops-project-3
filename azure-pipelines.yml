@@ -143,15 +143,15 @@ stages:
             - task: Bash@3
               displayName: 'Install Dependencies'
               env:
-                AZURE_LOG_ANALYTICS_WORKSPACE_ID: ${WORKSPACE_ID}
-                AZURE_LOG_ANALYTICS_WORKSPACE_PK: ${WORKSPACE_PK}
+                AZURE_LOG_ANALYTICS_WORKSPACE_ID: $(WORKSPACE_ID)
+                AZURE_LOG_ANALYTICS_WORKSPACE_PK: $(WORKSPACE_PK)
               inputs:
                 targetType: 'inline'
                 script: |
                   #! /bin/bash
 
-                  echo $AZURE_LOG_ANALYTICS_WORKSPACE_ID
-                  echo $AZURE_LOG_ANALYTICS_WORKSPACE_PK
+                  echo $(AZURE_LOG_ANALYTICS_WORKSPACE_ID)
+                  echo $(AZURE_LOG_ANALYTICS_WORKSPACE_PK)
 
                   # sudo apt-get update
                   # sudo apt-get upgrade -y
