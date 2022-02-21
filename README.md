@@ -105,9 +105,51 @@ by following the instruction [here](https://tecadmin.net/install-python-3-8-ubun
 6. JMeter Test - Execute the Endurance and Stress tests using JMeter.
 
 ### Environment Creation and Deployment
+
+#### Terraform
 - Log for Terraform in Azure Pipeline
 ![Terraform_01](./screens/09_Terraform_01.png)
 
 - Resources in Azure Portal
 ![Resources](./screens/09_Terraform_02.png)
 
+#### Build/Tests Job
+- Build Job
+![Build Job](./screens/010_pipeline.png)
+
+
+### Automated Testing
+- JMeter Test (Endurance Test)
+![Jmeter Test - Endurance Test](./screens/07_Endurance_Test.png)
+
+- JMeter Test (Stress Test)
+![Jmeter Test - Stress Test](./screens/07_Stress_Test.png)
+
+
+### Function Test
+- UI Test in Pipeline
+![UI Test](./screens/02_UI_Test.png)
+- Archive UI Test
+![UI Archive](./screens/02_UI_Test_Archive.png)
+
+### Integration Test
+- Regression Test
+![Regression Test](./screens/03_Regression_Test_01.png)
+![Regression Test 2](./screens/03_Regression_Test_02.png)
+
+- Run Summary Page for Regression Test
+![Summary Page](./screens/05_Publish_Regression_Test_01.png)
+- Test Result Page for Regression Test
+![Test Result Page](./screens/05_Publish_Regression_Test_02.png)
+
+- Validation Test
+![Validation Test](./screens/04_Validation_Test_01.png)
+![Validation Test 2](./screens/04_Validation_Test_02.png)
+
+- Run Summary Page for Validation Test
+![Summary Page](./screens/06_Publish_Validation_Test_01.png)
+- Test Result Page for Validation Test
+![Test Result Page](./screens/06_Publish_Validation_Test_02.png)
+
+- Publish Test Result
+![Publish Test](./screens/011_Publish_Results.png)
