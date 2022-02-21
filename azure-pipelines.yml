@@ -5,75 +5,75 @@ variables:
   appname: 'kumhoe-AppService'
   subscription: 'udacity-project-connection'
 stages:
-  - stage: ProvisionIaC
-    displayName: Provisioning Azure Resources
-    jobs:
-    - job: ProvisionAppService
-      displayName: Provisioning App Service
-      pool:
-        vmImage: 'Ubuntu-18.04'
-      steps:
-      - task: DownloadSecureFile@1
-        name: terraformtfvars
-        displayName: Download terraform.tfvars
-        inputs:
-          secureFile: 'terraform.tfvars'
+  # - stage: ProvisionIaC
+  #   displayName: Provisioning Azure Resources
+  #   jobs:
+  #   - job: ProvisionAppService
+  #     displayName: Provisioning App Service
+  #     pool:
+  #       vmImage: 'Ubuntu-18.04'
+  #     steps:
+  #     - task: DownloadSecureFile@1
+  #       name: terraformtfvars
+  #       displayName: Download terraform.tfvars
+  #       inputs:
+  #         secureFile: 'terraform.tfvars'
 
-      - task: DownloadSecureFile@1
-        name: maintf
-        displayName: Download main.tf
-        inputs:
-          secureFile: 'main.tf'
+  #     - task: DownloadSecureFile@1
+  #       name: maintf
+  #       displayName: Download main.tf
+  #       inputs:
+  #         secureFile: 'main.tf'
 
-      - task: InstallSSHKey@0
-        name: InstallSSHKey
-        displayName: Install SSH Key
-        inputs:
-          knownHostsEntry: 'default'
-          sshPublicKey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC19L6GYKYW6buRhtCLBGsBCd73hziaEvsoKZJqD5D0KAmrMyKHMIBSI9V21NuVr/Wyf6VyAWruu7yc0pu996Izd29GHU4viakRSTDByhhi5IX1x2FfS/NKXWtG+ALUNMkfJ+98YqpqV9apAvEoEpDMtNC3UEnDzaI0CF3r4dzlGLeVbF6ya4XRD1HtANtoA5R+eYyWHSz089crrzXvXg7BQywVioiGTw1OiHxv3GWKyKiIdvJYTWWLGro1npqm5GfGUxPNpJPSgAAHk4h1hDDAv/D3aXgMCBuuU6tOE1KiX6+04pcE35j5HTIH9YIN+5Dtf8lfy/okJEM/E1tBTpVchs9p0YGetElsmr6Ghs7IKzF99L714/gNgjIllZ3yeUFemsmRwYKgPmjEhQfawglbORQafXqUsDBIOTHknRPDE6yv9aQbf7RHDXQ6XGCSGjQ/vBE6rw//fk2t7gYcDsgv4wppasBMTa4BygUWK+tye7B1k8cmkwPJgW8aHtK1PQbsDgYl+GNjWYtRXr79PfLD5Gtda5dJCwocD5FReSok437AbHQblgkz7b8YXyhLS3318dSmoGcKHUq4kZf7tCGu/YUH9sH68mcyJSu4XKm1nmA9SJ9nb8jn2nA8uRidjLVHYSxT6LRhcNUgSCbg8i0JDBfIT8IUjOUiazpFQVVALw== MacBookPro@MacBook-Pro.local'
-          sshKeySecureFile: 'id_rsa'
+  #     - task: InstallSSHKey@0
+  #       name: InstallSSHKey
+  #       displayName: Install SSH Key
+  #       inputs:
+  #         knownHostsEntry: 'default'
+  #         sshPublicKey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC19L6GYKYW6buRhtCLBGsBCd73hziaEvsoKZJqD5D0KAmrMyKHMIBSI9V21NuVr/Wyf6VyAWruu7yc0pu996Izd29GHU4viakRSTDByhhi5IX1x2FfS/NKXWtG+ALUNMkfJ+98YqpqV9apAvEoEpDMtNC3UEnDzaI0CF3r4dzlGLeVbF6ya4XRD1HtANtoA5R+eYyWHSz089crrzXvXg7BQywVioiGTw1OiHxv3GWKyKiIdvJYTWWLGro1npqm5GfGUxPNpJPSgAAHk4h1hDDAv/D3aXgMCBuuU6tOE1KiX6+04pcE35j5HTIH9YIN+5Dtf8lfy/okJEM/E1tBTpVchs9p0YGetElsmr6Ghs7IKzF99L714/gNgjIllZ3yeUFemsmRwYKgPmjEhQfawglbORQafXqUsDBIOTHknRPDE6yv9aQbf7RHDXQ6XGCSGjQ/vBE6rw//fk2t7gYcDsgv4wppasBMTa4BygUWK+tye7B1k8cmkwPJgW8aHtK1PQbsDgYl+GNjWYtRXr79PfLD5Gtda5dJCwocD5FReSok437AbHQblgkz7b8YXyhLS3318dSmoGcKHUq4kZf7tCGu/YUH9sH68mcyJSu4XKm1nmA9SJ9nb8jn2nA8uRidjLVHYSxT6LRhcNUgSCbg8i0JDBfIT8IUjOUiazpFQVVALw== MacBookPro@MacBook-Pro.local'
+  #         sshKeySecureFile: 'id_rsa'
 
-      - task: Bash@3
-        displayName: Copy terraform.tfvars
-        inputs:
-          targetType: 'inline'
-          script: cp $(Agent.TempDirectory)/terraform.tfvars $(System.DefaultWorkingDirectory)/terraform
+  #     - task: Bash@3
+  #       displayName: Copy terraform.tfvars
+  #       inputs:
+  #         targetType: 'inline'
+  #         script: cp $(Agent.TempDirectory)/terraform.tfvars $(System.DefaultWorkingDirectory)/terraform
 
-      - task: Bash@3
-        displayName: Copy main.tf
-        inputs:
-          targetType: 'inline'
-          script: cp $(Agent.TempDirectory)/main.tf $(System.DefaultWorkingDirectory)/terraform
+  #     - task: Bash@3
+  #       displayName: Copy main.tf
+  #       inputs:
+  #         targetType: 'inline'
+  #         script: cp $(Agent.TempDirectory)/main.tf $(System.DefaultWorkingDirectory)/terraform
       
-      - task: TerraformInstaller@0
-        displayName: Install Terraform
-        inputs:
-          terraformVersion: '1.1.4'
+  #     - task: TerraformInstaller@0
+  #       displayName: Install Terraform
+  #       inputs:
+  #         terraformVersion: '1.1.4'
 
-      - task: TerraformTaskV2@2
-        inputs:
-          provider: 'azurerm'
-          command: 'init'
-          backendServiceArm: $(subscription)
-          backendAzureRmResourceGroupName: 'tfstate'
-          backendAzureRmStorageAccountName: 'tfstate16825'
-          backendAzureRmContainerName: 'tfstate'
-          backendAzureRmKey: 'terraform.state'
-          workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+  #     - task: TerraformTaskV2@2
+  #       inputs:
+  #         provider: 'azurerm'
+  #         command: 'init'
+  #         backendServiceArm: $(subscription)
+  #         backendAzureRmResourceGroupName: 'tfstate'
+  #         backendAzureRmStorageAccountName: 'tfstate16825'
+  #         backendAzureRmContainerName: 'tfstate'
+  #         backendAzureRmKey: 'terraform.state'
+  #         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
       
-      - task: TerraformTaskV2@2
-        inputs:
-          provider: 'azurerm'
-          command: 'plan'
-          environmentServiceNameAzureRM: $(subscription)
-          workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+  #     - task: TerraformTaskV2@2
+  #       inputs:
+  #         provider: 'azurerm'
+  #         command: 'plan'
+  #         environmentServiceNameAzureRM: $(subscription)
+  #         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
       
-      - task: TerraformTaskV2@2
-        inputs:
-          provider: 'azurerm'
-          command: 'apply'
-          environmentServiceNameAzureRM: $(subscription)
-          workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+  #     - task: TerraformTaskV2@2
+  #       inputs:
+  #         provider: 'azurerm'
+  #         command: 'apply'
+  #         environmentServiceNameAzureRM: $(subscription)
+  #         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
 
   - stage: Build
     displayName: Build FakeRestAPI
