@@ -143,8 +143,8 @@ stages:
             - task: Bash@3
               displayName: 'Install Dependencies'
               env:
-                AZURE_LOG_ANALYTICS_WORKSPACE_ID: $(WORKSPACE_ID)
-                AZURE_LOG_ANALYTICS_WORKSPACE_PK: $(WORKSPACE_PK)
+                AZURE_LOG_ANALYTICS_WORKSPACE_ID: $((WORKSPACE_ID))
+                AZURE_LOG_ANALYTICS_WORKSPACE_PK: $((WORKSPACE_PK))
               inputs:
                 targetType: 'inline'
                 script: |
