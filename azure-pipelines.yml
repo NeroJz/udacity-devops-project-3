@@ -75,61 +75,61 @@ stages:
   #         environmentServiceNameAzureRM: $(subscription)
   #         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
 
-  - stage: Build
-    displayName: Build FakeRestAPI
-    jobs:
-    - job: BuildFakerRest
-      displayName: Build FakerRest Archive
-      pool:
-        vmImage: 'Ubuntu-18.04'
-      steps:
-      - task: ArchiveFiles@2
-        displayName: 'Archive FakeRestAPI'
-        inputs:
-          rootFolderOrFile: '$(System.DefaultWorkingDirectory)/fakerestapi'
-          includeRootFolder: false
-          archiveType: 'zip'
-          archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
-      - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
-        displayName: 'Upload FakerRestAPI Artifact'
-        artifact: drop-fakerestapi
+  # - stage: Build
+  #   displayName: Build FakeRestAPI
+  #   jobs:
+  #   - job: BuildFakerRest
+  #     displayName: Build FakerRest Archive
+  #     pool:
+  #       vmImage: 'Ubuntu-18.04'
+  #     steps:
+  #     - task: ArchiveFiles@2
+  #       displayName: 'Archive FakeRestAPI'
+  #       inputs:
+  #         rootFolderOrFile: '$(System.DefaultWorkingDirectory)/fakerestapi'
+  #         includeRootFolder: false
+  #         archiveType: 'zip'
+  #         archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
+  #     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
+  #       displayName: 'Upload FakerRestAPI Artifact'
+  #       artifact: drop-fakerestapi
     
-    - job: BuildSelenium
-      displayName: Build UI Test Archive
-      pool:
-        vmImage: 'Ubuntu-18.04'
-      steps:
-      - task: ArchiveFiles@2
-        displayName: 'Archive Selenium'
-        inputs:
-          rootFolderOrFile: '$(System.DefaultWorkingDirectory)/selenium'
-          includeRootFolder: false
-          archiveType: 'zip'
-          archiveFile: '$(Build.BuildId)/selenium.zip'
-          replaceExistingArchive: true
-      - upload: $(Build.BuildId)/selenium.zip
-        displayName: 'Upload Selenium Artifact'
-        artifact: selenium
+  #   - job: BuildSelenium
+  #     displayName: Build UI Test Archive
+  #     pool:
+  #       vmImage: 'Ubuntu-18.04'
+  #     steps:
+  #     - task: ArchiveFiles@2
+  #       displayName: 'Archive Selenium'
+  #       inputs:
+  #         rootFolderOrFile: '$(System.DefaultWorkingDirectory)/selenium'
+  #         includeRootFolder: false
+  #         archiveType: 'zip'
+  #         archiveFile: '$(Build.BuildId)/selenium.zip'
+  #         replaceExistingArchive: true
+  #     - upload: $(Build.BuildId)/selenium.zip
+  #       displayName: 'Upload Selenium Artifact'
+  #       artifact: selenium
   
   - stage: Deployment
     displayName: Deploy Artifact(s)
     jobs:
-    - deployment: FakeRestAPI
-      displayName: Deploying FakeRestAPI from Artifact
-      pool:
-        vmImage: 'Ubuntu-18.04'
-      environment: 'WEBAPP-TEST'
-      strategy:
-        runOnce:
-          deploy:
-            steps:
-            - task: AzureWebApp@1
-              displayName: 'Deploy FakeRestAPI app'
-              inputs:
-                azureSubscription: $(subscription)
-                appName: $(appname)
-                appType: webApp
-                package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
+    # - deployment: FakeRestAPI
+    #   displayName: Deploying FakeRestAPI from Artifact
+    #   pool:
+    #     vmImage: 'Ubuntu-18.04'
+    #   environment: 'WEBAPP-TEST'
+    #   strategy:
+    #     runOnce:
+    #       deploy:
+    #         steps:
+    #         - task: AzureWebApp@1
+    #           displayName: 'Deploy FakeRestAPI app'
+    #           inputs:
+    #             azureSubscription: $(subscription)
+    #             appName: $(appname)
+    #             appType: webApp
+    #             package: $(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip
 
     - deployment: VMDeploy
       displayName: Install Dependencies on VM
@@ -149,94 +149,98 @@ stages:
                 targetType: 'inline'
                 script: |
                   #! /bin/bash
-                  sudo apt-get update
-                  sudo apt-get upgrade -y
-                  sudo apt-get install python3-pip unzip expect -y
-                  sudo apt-get install -y chromium-browser
-                  python3.8 -m pip install --upgrade pip
-                  pip3 install selenium
-                  sudo rm -rf chromedriver*
-                  wget https://chromedriver.storage.googleapis.com/90.0.4430.24/chromedriver_linux64.zip
-                  unzip chromedriver*.zip
-                  sudo mv chromedriver -f /usr/bin
 
-                  /usr/bin/chromium-browser -version
-                  /usr/bin/chromedriver -version
-                  python3.8 -V
+                  echo $AZURE_LOG_ANALYTICS_WORKSPACE_ID
+                  echo $AZURE_LOG_ANALYTICS_WORKSPACE_PK
 
-                  python3.8 -c "import selenium; print('Selenium Version:', selenium.__version__)"
+                  # sudo apt-get update
+                  # sudo apt-get upgrade -y
+                  # sudo apt-get install python3-pip unzip expect -y
+                  # sudo apt-get install -y chromium-browser
+                  # python3.8 -m pip install --upgrade pip
+                  # pip3 install selenium
+                  # sudo rm -rf chromedriver*
+                  # wget https://chromedriver.storage.googleapis.com/90.0.4430.24/chromedriver_linux64.zip
+                  # unzip chromedriver*.zip
+                  # sudo mv chromedriver -f /usr/bin
 
-                  wget https://raw.githubusercontent.com/microsoft/OMS-Agent-for-Linux/master/tools/purge_omsagent.sh
+                  # /usr/bin/chromium-browser -version
+                  # /usr/bin/chromedriver -version
+                  # python3.8 -V
 
-                  sudo sh purge_omsagent.sh
+                  # python3.8 -c "import selenium; print('Selenium Version:', selenium.__version__)"
 
-                  wget https://raw.githubusercontent.com/Microsoft/OMS-Agent-for-Linux/master/installer/scripts/onboard_agent.sh && sh onboard_agent.sh -w ${AZURE_LOG_ANALYTICS_WORKSPACE_ID} -s ${AZURE_LOG_ANALYTICS_WORKSPACE_PK}
+                  # wget https://raw.githubusercontent.com/microsoft/OMS-Agent-for-Linux/master/tools/purge_omsagent.sh
+
+                  # sudo sh purge_omsagent.sh
+
+                  # wget https://raw.githubusercontent.com/Microsoft/OMS-Agent-for-Linux/master/installer/scripts/onboard_agent.sh && sh onboard_agent.sh -w ${AZURE_LOG_ANALYTICS_WORKSPACE_ID} -s ${AZURE_LOG_ANALYTICS_WORKSPACE_PK}
                   
-                  sudo /opt/microsoft/omsagent/bin/service_control restart ${AZURE_LOG_ANALYTICS_WORKSPACE_ID}
+                  # sudo /opt/microsoft/omsagent/bin/service_control restart ${AZURE_LOG_ANALYTICS_WORKSPACE_ID}
                 
-  - stage: UITest
-    displayName: UI Testing
-    jobs:
-    - deployment: VMUITest
-      displayName: UI Test In Selenium
-      environment:
-        name: 'WEBAPP-TEST'
-        resourceType: VirtualMachine
-      strategy:
-        runOnce:
-          deploy:
-            steps:
-            - download: current
-              displayName: 'Download Selenium Artifact'
-              artifact: selenium
+  # - stage: UITest
+  #   displayName: UI Testing
+  #   jobs:
+  #   - deployment: VMUITest
+  #     displayName: UI Test In Selenium
+  #     environment:
+  #       name: 'WEBAPP-TEST'
+  #       resourceType: VirtualMachine
+  #     strategy:
+  #       runOnce:
+  #         deploy:
+  #           steps:
+  #           - download: current
+  #             displayName: 'Download Selenium Artifact'
+  #             artifact: selenium
             
-            - task: Bash@3
-              displayName: Run UI Test
-              inputs:
-                targetType: 'inline'
-                script: |
-                  unzip -o $(Pipeline.Workspace)/selenium/selenium.zip -d .
-                  sudo mkdir /var/logs
-                  python3.8 ui-test.py > ui-logs.log
-                  sudo mv ui-logs.log /var/logs
+  #           - task: Bash@3
+  #             displayName: Run UI Test
+  #             inputs:
+  #               targetType: 'inline'
+  #               script: |
+  #                 unzip -o $(Pipeline.Workspace)/selenium/selenium.zip -d .
+  #                 sudo mkdir /var/logs
+  #                 python3.8 ui-test.py > ui-logs.log
+  #                 sudo mv ui-logs.log /var/logs
 
-  - stage: IntegrationTests
-    displayName: Integration Tests
-    jobs:
-    - job: PostmanTests
-      displayName: Postman Testing
-      pool:
-        vmImage: 'Ubuntu-18.04'
-      steps:
-      - task: NodeTool@0
-        displayName: Install Node v12
-        inputs:
-          versionSpec: '12.x'
+  # - stage: IntegrationTests
+  #   displayName: Integration Tests
+  #   jobs:
+  #   - job: PostmanTests
+  #     displayName: Postman Testing
+  #     pool:
+  #       vmImage: 'Ubuntu-18.04'
+  #     steps:
+  #     - task: NodeTool@0
+  #       displayName: Install Node v12
+  #       inputs:
+  #         versionSpec: '12.x'
       
-      - task: CmdLine@2
-        displayName: Install Newman
-        inputs:
-          script: 'npm install newman'
-          workingDirectory: '$(System.DefaultWorkingDirectory)'
+  #     - task: CmdLine@2
+  #       displayName: Install Newman
+  #       inputs:
+  #         script: 'npm install newman'
+  #         workingDirectory: '$(System.DefaultWorkingDirectory)'
       
-      - task: CmdLine@2
-        displayName: Run Regression Test
-        inputs:
-          script: 'newman run postman/Regression_Test.postman_collection.json -e postman/Regression_Test_Environment.postman_environment.json --delay-request 5000 --bail newman -x --reporters cli,junit --reporter-junit-export Results/RegressionTests.xml'
-          workingDirectory: '$(System.DefaultWorkingDirectory)'
+  #     - task: CmdLine@2
+  #       displayName: Run Regression Test
+  #       inputs:
+  #         script: 'newman run postman/Regression_Test.postman_collection.json -e postman/Regression_Test_Environment.postman_environment.json --delay-request 5000 --bail newman -x --reporters cli,junit --reporter-junit-export Results/RegressionTests.xml'
+  #         workingDirectory: '$(System.DefaultWorkingDirectory)'
       
-      - task: CmdLine@2
-        displayName: Run Data Validation Test
-        inputs:
-          script: 'newman run postman/Data_Validation_Test.postman_collection.json -e postman/DATA_VALIDATATION_ENV.postman_environment.json --delay-request 5000 --bail newman -x --reporters cli,junit --reporter-junit-export Results/ValidationTests.xml'
-          workingDirectory: '$(System.DefaultWorkingDirectory)'
+  #     - task: CmdLine@2
+  #       displayName: Run Data Validation Test
+  #       inputs:
+  #         script: 'newman run postman/Data_Validation_Test.postman_collection.json -e postman/DATA_VALIDATATION_ENV.postman_environment.json --delay-request 5000 --bail newman -x --reporters cli,junit --reporter-junit-export Results/ValidationTests.xml'
+  #         workingDirectory: '$(System.DefaultWorkingDirectory)'
 
-      - task: PublishTestResults@2
-        displayName: Publish Postman Test Results
-        condition: always()
-        inputs:
-          testResultsFormat: 'JUnit'
-          testResultsFiles: '$(System.DefaultWorkingDirectory)/Results/*.xml'
+  #     - task: PublishTestResults@2
+  #       displayName: Publish Postman Test Results
+  #       condition: always()
+  #       inputs:
+  #         testResultsFormat: 'JUnit'
+  #         testResultsFiles: '$(System.DefaultWorkingDirectory)/Results/*.xml'
 
   # - stage: PerformanceTest
   #   displayName: JMeter Test
