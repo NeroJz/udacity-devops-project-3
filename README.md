@@ -119,6 +119,12 @@ by following the instruction [here](https://tecadmin.net/install-python-3-8-ubun
 - Log for Terraform in Azure Pipeline
 ![Terraform_01](./screens/09_Terraform_01.png)
 
+- Screen shot of Terraform in Azure Pipeline after creating the resources
+![Terraform_02](./screens/01_Terraform_pipeline.png)
+
+- Screen shot of Terraform state in Azure Portal
+![Terraform_03](./screens/01_Terraform_stage.png)
+
 - Resources in Azure Portal
 ![Resources](./screens/09_Terraform_02.png)
 
