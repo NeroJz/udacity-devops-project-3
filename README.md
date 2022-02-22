@@ -129,10 +129,10 @@ by following the instruction [here](https://tecadmin.net/install-python-3-8-ubun
 
 ### Automated Testing
 - JMeter Test (Endurance Test)
-![Jmeter Test - Endurance Test](./screens/07_Endurance_Test.png)
+![Jmeter Test - Endurance Test](./screens/07_Endurance_Test_02.png)
 
 - JMeter Test (Stress Test)
-![Jmeter Test - Stress Test](./screens/07_Stress_Test.png)
+![Jmeter Test - Stress Test](./screens/07_Stress_Test_02.png)
 
 
 ### Function Test
@@ -165,11 +165,17 @@ by following the instruction [here](https://tecadmin.net/install-python-3-8-ubun
 
 
 ### Monitoring & Observability
-- Screenshots of email received <br/>
+- Screenshot of email received <br/>
 ![email](./screens/012_Email_Alert.png)
 
-- Screenshots of alert rule
+- Screenshot of alert rule
 ![alert rule](./screens/013_AlertRule.png)
+
+- Screenshot of All Alerts
+![All alert](./screens/017_Alert_Rule.png)
+
+- Screenshot of Metrics
+![Metrics](./screens/018_Metrics.png)
 
 - Screenshot of Analytic Log for UI Test
 ![Analytic Log](./screens/016_Selenium_log.png)
